@@ -2,23 +2,22 @@ CREATE DATABASE DB_RECEIVE;
 
 use DB_RECEIVE;
 
-CREATE TABLE `users` (
+CREATE TABLE `debtors` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `cpf` varchar(11) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `birth` date NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `birth` date NOT NULL,  
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_date` DATETIME,
 
-  constraint pk_users primary key(`id`)
+  constraint pk_debtors primary key(`id`)
 
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `users_debt` ( 
+CREATE TABLE `debtors_debt` ( 
   
   `id` int(11) NOT NULL,  
   `description` text,
@@ -26,8 +25,8 @@ CREATE TABLE `users_debt` (
   `date_due` date,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),  
   `updated_date` DATETIME,
-  `id_user` int(11) NOT NULL,  
+  `id_debtor` int(11) NOT NULL,  
   
-  constraint pk_users_debt primary key(`id`),
-  constraint fk_users FOREIGN KEY (`id_user`) REFERENCES users (`id`)
+  constraint pk_debtors_debt primary key(`id`),
+  constraint fk_debtors FOREIGN KEY (`id_debtor`) REFERENCES debtors (`id`)
 );
