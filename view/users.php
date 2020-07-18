@@ -32,36 +32,46 @@
 		</div>
 	</nav>
 
-	<table class="table">
-		<thead>
-			<tr><th colspan=7 style="text-align:center;"><h4>Data Form</h4></th></tr>
-			<tr style="text-align:center;">
-				<th>Id</th>
-				<th>Created date</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Date of birth</th>
-				<th colspan=2>Action</th>
-			</tr>
-		</thead>
-		<tbody>		
-		</tbody>
-	</table>
+	<div class="table-responsive">
+
+		<table class="table">
+			<thead>
+				<tr><th colspan=7 style="text-align:center;"><h4>Data Users Form</h4></th></tr>
+				<tr style="text-align:center;">
+					<th>Name</th>
+					<th>Address</th>
+					<th>CPF</th>
+					<th>Email</th>
+					<th colspan=2>Action</th>
+				</tr>
+			</thead>
+			<tbody>		
+			</tbody>
+		</table>
+
+	</div>
 
 	<form name="form1" id="form1" method="post">
 		
-		Created Date:<input class="form-control" disabled type="text" name="created_date" id="created_date">	
-		Name:<input class="form-control" type="text" name="name" id="name" size=100>	
-		Email:<input class="form-control" type="text" name="email" id="email" size=100>	
-		Date of birth:<input class="form-control" type="date" name="birth" id="birth" size=100>	
-		Password:<input class="form-control" type="text" name="password" id="password" size=10>		
+		<label>Created Date:</label>
+		<input class="form-control" disabled type="text" name="created_date" id="created_date">	
+		<label>Name:</label>
+		<input class="form-control" type="text" name="name" id="name" size=100>	
+		<label>Address:</label>
+		<input class="form-control" type="text" name="address" id="address" size=100>	
+		<label>CPF:</label>
+		<input class="form-control" type="text" name="cpf" id="cpf" size=11>	
+		<label>Email:</label>
+		<input class="form-control" type="text" name="email" id="email" size=100>	
+		<label>Date of birth:</label>
+		<input class="form-control" type="date" name="birth" id="birth" size=100>			
 		
 		<input type="hidden" name="id_user" id="id_user">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
-		<input id="save" class="btn-primary" type="submit" value="Insert New"></input>	
+		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
 
-		<input id="cancel" class="btn-primary" type="reset" value="Cancel"></input>	
+		<input id="cancel" class="btn btn-primary" type="reset" value="Cancel"></input>	
 
 	</form>
 
@@ -90,7 +100,7 @@
 		function getData()
 		{
 			$.ajax({
-				url:"getdata.php",
+				url:"../controllers/getdata.php",
 				success: function(data)
 				{
 					$('tbody').html(data);					
@@ -127,7 +137,7 @@
 				var form1 = $(this).serialize();
 				
 				$.ajax({
-					url: "save.php",
+					url: "../controllers/save.php",
 					method:"POST",
 					data:form1,
 					success:function(data)
@@ -167,7 +177,7 @@
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"save.php",
+				url:"../controllers/save.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
@@ -195,7 +205,7 @@
 			{
 				
 				$.ajax({
-					url:"save.php",
+					url:"../controllers/save.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)

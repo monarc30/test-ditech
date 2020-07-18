@@ -5,15 +5,17 @@ class DataBase {
 	private $host;
 	private $user;
 	private $pass;
-	private $bd;
-	private $link;	
+	private $bd;	
 
-	public function __construct(){		
+	public function __construct( 	string $host, 
+									string $user, 
+									string $pass, 
+									string $bd ) {		
 	
-		$this->host = "localhost";
-		$this->user = "root";
-		$this->pass = "";
-		$this->bd = "teste_api";					
+		$this->host = $host;
+		$this->user = $user;
+		$this->pass = $pass;
+		$this->bd = $bd;					
 		
 	}	
 	

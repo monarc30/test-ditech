@@ -11,7 +11,7 @@ if (isset($_POST["action"]))
 			'password' => $_POST['password'],
 		);
 
-		$url = "http://localhost/teste_api/getUsers.php?action=insert";
+		$url = "http://localhost/test_receiv/api/getUsers.php?action=insert";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_POST, true);		
 		curl_setopt($client, CURLOPT_POSTFIELDS, $form_data);		
@@ -43,7 +43,7 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'user_one')		
 	{
 		$id = $_POST["id"];
-		$url = "http://localhost/teste_api/getUsers.php?action=user_one&id=".$id."";
+		$url = "http://localhost/test_receiv/api/getUsers.php?action=user_one&id=".$id."";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($client);		
@@ -62,7 +62,7 @@ if (isset($_POST["action"]))
 			'password' 			=> $_POST['password'],
 			'id'				=> $_POST['id_user'],
 		);
-		$url = "http://localhost/teste_api/getUsers.php?action=update";
+		$url = "http://localhost/test_receiv/api/getUsers.php?action=update";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_POST, true);
 		curl_setopt($client, CURLOPT_POSTFIELDS, $form_data);
@@ -86,7 +86,7 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'delete')		
 	{
 		$id = $_POST["id"];
-		$url = "http://localhost/teste_api/getUsers.php?action=delete&id=".$id."";
+		$url = "http://localhost/test_receiv/api/getUsers.php?action=delete&id=".$id."";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($client);		

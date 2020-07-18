@@ -1,6 +1,6 @@
 <?php
 
-require_once ( __DIR__ .'/DataBase.php' ) ;
+require_once ( __PATH_ROOT__ .'/dao/DataBase.php' ) ;
 
 $data = new DataBase();
 
