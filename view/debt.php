@@ -4,34 +4,47 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Test</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
 
-<div class="container">    
+<div class="container">
 
-    <div class="header">
+	<table class="table">
+		<thead>
+			<tr><th colspan=7 style="text-align:center;"><h4>Data Form</h4></th></tr>
+			<tr style="text-align:center;">
+				<th>Id</th>
+				<th>Created date</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Date of birth</th>
+				<th colspan=2>Action</th>
+			</tr>
+		</thead>
+		<tbody>		
+		</tbody>
+	</table>
 
-        <h1>Receiv.it Solutions</h1>
+	<form name="form1" id="form1" method="post">
+		Created Date:<input class="form-control" disabled type="text" name="created_date" id="created_date">	
+		Name:<input class="form-control" type="text" name="name" id="name" size=100>	
+		Email:<input class="form-control" type="text" name="email" id="email" size=100>	
+		Date of birth:<input class="form-control" type="date" name="birth" id="birth" size=100>	
+		Password:<input class="form-control" type="text" name="password" id="password" size=10>		
+		
+		<input type="hidden" name="id_user" id="id_user">
+		<input type="hidden" name="action" id="action" value="insert">
+		<hr>
+		<input id="save" class="btn-primary" type="submit" value="Insert New"></input>	
 
-    </div>
+		<input id="cancel" class="btn-primary" type="reset" value="Cancel"></input>	
 
-    <div class="content">
-    
-        <button id="users" onclick="location.href='\view\users.php'">Users</button>
-        <button id="bDoubts" onclick="location.href='\view\debt.php'">Doubts Users</button>	
-
-    </div>
-
-    <div class="footer">
-        @copyright 2020 Receiv
-    </div>
+	</form>
 
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		

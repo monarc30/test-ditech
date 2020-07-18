@@ -6,8 +6,7 @@ class DataBase {
 	private $user;
 	private $pass;
 	private $bd;
-	private $link;
-	private $con;
+	private $link;	
 
 	public function __construct(){		
 	
