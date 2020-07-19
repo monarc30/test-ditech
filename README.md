@@ -8,5 +8,9 @@ geração do banco de teste.
 
 exemplo: http://localhost/test_receiv/
 
+Atenção!!!
+renomear arquivo env.example.php para env.php
+
+
 
 

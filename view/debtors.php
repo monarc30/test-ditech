@@ -23,10 +23,10 @@
 					<a class="nav-link" href="..\index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#">Users</a>
+					<a class="nav-link disabled" href="#">Debtors</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="debt.php">Debts</a>
+					<a class="nav-link" href="debtors_debt.php">Debtors Debts</a>
 				</li>		
 			</ul>
 		</div>
@@ -36,10 +36,9 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Data Users Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Data Debtors Form</h4></th></tr>
 				<tr style="text-align:center;">
 					<th>Name</th>
-					<th>Address</th>
 					<th>CPF</th>
 					<th>Email</th>
 					<th colspan=2>Action</th>
@@ -56,17 +55,17 @@
 		<label>Created Date:</label>
 		<input class="form-control" disabled type="text" name="created_date" id="created_date">	
 		<label>Name:</label>
-		<input class="form-control" type="text" name="name" id="name" size=100>	
+		<input class="form-control" type="text" name="name" id="name" size=100 required>	
 		<label>Address:</label>
-		<input class="form-control" type="text" name="address" id="address" size=100>	
+		<input class="form-control" type="text" name="address" id="address" size=100 required>	
 		<label>CPF:</label>
-		<input class="form-control" type="text" name="cpf" id="cpf" size=11>	
+		<input class="form-control" type="text" name="cpf" id="cpf" size=11 maxlength=11 required>	
 		<label>Email:</label>
-		<input class="form-control" type="text" name="email" id="email" size=100>	
+		<input class="form-control" type="text" name="email" id="email" size=100 required>	
 		<label>Date of birth:</label>
-		<input class="form-control" type="date" name="birth" id="birth" size=100>			
+		<input class="form-control" type="date" name="birth" id="birth" size=100 required>			
 		
-		<input type="hidden" name="id_user" id="id_user">
+		<input type="hidden" name="id_debtor" id="id_debtor">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
 		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
@@ -100,7 +99,7 @@
 		function getData()
 		{
 			$.ajax({
-				url:"../controllers/getdata.php",
+				url:"../api/getdataDebtors.php",
 				success: function(data)
 				{
 					$('tbody').html(data);					
@@ -117,20 +116,10 @@
 		
 		$('#form1').on('submit', function(event){
 			event.preventDefault();
-			if ($('#name').val()=="") 
-			{
-				alert('Name is empty!');
-				$('#name').focus();
-				
-			}
-			else if ($('#email').val()=="") {
-				alert('Email is empty!');
-				$('#email').focus();
-				
-			}
-			else if ($('#password').val().length < 8) {
-				alert('Password is too small!');
-				$('#password').focus();
+			
+			if ($('#cpf').val().length < 11) {
+				alert('CPF is invalid!');
+				$('#cpf').focus();
 				
 			}
 			else {
@@ -146,31 +135,31 @@
 						if (data === 'insert')
 						{
 							alert("Data inserted!");
+							Reset();
+							getData();
 						}
-						if (data === 'error2')
+						else if (data === 'error2')
 						{
 							alert("This email already exists in the database!");
 						}						
-						if (data === 'update') 
+						else if (data === 'update') 
 						{
 							alert("Data updated!");
+							Reset();
+							getData();						
+						
 						}
-
-						Reset();
-						getData();						
-						
-						
 					}
 				});				
 			}
 		});
 		
 		
-		$(document).on('click', '.edit', function(){
+		$(document).on('click', '.edit', function(){			
 
 			var id = $(this).attr('id');			
-			
-			var action = 'user_one';
+
+			var action = 'debtor_one';
 			
 			$('#action').val('update');
 
@@ -183,13 +172,17 @@
 				dataType:"json",				
 				success:function(data)
 				{
-					$('#id_user').val(id);
+					$('#id_debtor').val(id);
 					$('#created_date').val(data.created_date);
 					$('#name').val(data.name);
+					$('#address').val(data.address);
+					$('#cpf').val(data.cpf);
 					$('#email').val(data.email);
-					$('#birth').val(data.birth);
-					$('#password').val(data.password);
-				}
+					$('#birth').val(data.birth);										
+				},
+				error: function(result) {
+                    console.log(result);
+                }
 			});
 		});
 		

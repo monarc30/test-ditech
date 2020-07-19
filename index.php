@@ -21,8 +21,8 @@
 
     <div class="content">
     
-        <a href="view\users.php" class="btn btn-primary">View Users</a>
-        <a href="view\debt.php" class="btn btn-primary">View Doubts Users</a>	
+        <a href="view\debtors.php" class="btn btn-primary">View Debtors</a>
+        <a href="view\debtors_debt.php" class="btn btn-primary">View Doubts Users</a>	
 
     </div>
 

@@ -1,9 +1,9 @@
-CREATE DATABASE DB_RECEIVE;
+CREATE DATABASE DB_RECEIV;
 
-use DB_RECEIVE;
+use DB_RECEIV;
 
 CREATE TABLE `debtors` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `cpf` varchar(11) DEFAULT NULL,
