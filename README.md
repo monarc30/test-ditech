@@ -9,7 +9,10 @@ geração do banco de teste.
 exemplo: http://localhost/test_receiv/
 
 Atenção!!!
-renomear arquivo env.example.php para env.php
+renomear arquivo env.example.php para env.php e inserir o host conforme exemplo acima,
+utilizar este mesmo host no arquivo env.php
+
+
 
 
 
