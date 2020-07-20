@@ -4,10 +4,10 @@ putenv('DISPLAY_ERRORS_DETAILS='. true);
 
 $url = 'http://localhost/test_receiv';
 
-$url_get_all = "http://localhost/test_receiv/api/getUsers.php?action=get_all";	
+$url_api = $url . "/api/getdataGeneric.php";
 
-$host = 'localhost';
-$dbname = 'db_receiv';
-$user = 'root';
+$host = '';
+$dbname = '';
+$user = '';
 $password = '';
-$port = '3306';
+$port = '';
