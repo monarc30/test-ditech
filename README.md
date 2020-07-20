@@ -4,7 +4,7 @@ Teste de crud no formato API
 Arquivo \dump\test_receiv.sql deve ser importado no Mysql ou apenas copiar o código sql nele para
 geração do banco de teste.
 
-1 - entrar em \htdocs ou \www, clonar dentro de uma pasta chamada /test_receiv/
+1 - entrar em \htdocs ou \www, clonar dentro de uma pasta 
 
 exemplo: http://localhost/test_receiv/
 
