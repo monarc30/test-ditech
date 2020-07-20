@@ -61,8 +61,8 @@
 		<label>Due Date:</label>
 		<input class="form-control" type="date" name="data_due" id="data_due" required>	
 		<label>Debtor:</label>
-		<select name="id_debtor">
-			<option>-Select Debtor-</option>
+		<select id="id_debtor" name="id_debtor" required>
+			<option value="">-Select Debtor-</option>
 		</select>					
 		
 		<input type="hidden" name="id_debtor_debt" id="id_debtor_debt">
@@ -83,7 +83,9 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		getData();
+		getData('debtors_debt', '?action=get_all_debts');
+
+		getData('id_debtor', '?action=get_all');
 
 		function Reset() 
 		{
@@ -96,13 +98,20 @@
 
 		}		
 		
-		function getData()
+		function getData( type, param )
 		{
 			$.ajax({
-				url:"../api/getdataDebtorsDebt.php",
+				url:"../api/getdataDebtors.php",
+				data: { type: type, param: param },
 				success: function(data)
 				{
-					$('tbody').html(data);					
+					if (type=='debtors_debt') {
+						$('tbody').html(data);
+					}
+					else{
+						
+						$('#id_debtor').append(data);
+					}
 
 				}
 			})
@@ -126,7 +135,7 @@
 				var form1 = $(this).serialize();
 				
 				$.ajax({
-					url: "../controllers/save.php",
+					url: "../api/save.php",
 					method:"POST",
 					data:form1,
 					success:function(data)
@@ -136,7 +145,7 @@
 						{
 							alert("Data inserted!");
 							Reset();
-							getData();
+							getData('debtors_debt', '?action=get_all_debts');
 						}
 						else if (data === 'error2')
 						{
@@ -146,7 +155,7 @@
 						{
 							alert("Data updated!");
 							Reset();
-							getData();						
+							getData('debtors_debt', '?action=get_all_debts');
 						
 						}
 					}
@@ -166,7 +175,7 @@
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../controllers/save.php",
+				url:"../api/save.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
@@ -198,13 +207,13 @@
 			{
 				
 				$.ajax({
-					url:"../controllers/save.php",
+					url:"../api/save.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)
 					{
 						Reset();
-						getData();						
+						getData('debtors_debt','?action=get_all_debts');
 						
 						alert("Data deleted!");
 					}

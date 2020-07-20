@@ -1,20 +1,9 @@
 <?php
 
-require_once ( "../env.php" );
+class saveController {
 
-if (isset($_POST["action"]))
-{
-	if($_POST["action"] === 'insert')
-	{
-		$form_data = array(
-			'name' => $_POST['name'],
-			'address' => $_POST['address'],
-			'cpf' => $_POST['cpf'],
-			'email' => $_POST['email'],
-			'birth' => $_POST['birth'],			
-		);
+	public static function add( array $form_data, string $param, string $url_api ) {
 
-		$param = "?action=insert";		
 		$url = $url_api.$param;
 
 		$client = curl_init($url);
@@ -30,85 +19,65 @@ if (isset($_POST["action"]))
 		{
 			if($result[$keys]['success'] === '1')
 			{
-				echo 'insert';
+				return 'insert';
 			}
 			else if($result[$keys]['success'] === '2') 
 			{
-				echo 'error2';
+				return 'error2';
 			}
 			else
 			{
-				echo 'error';
+				return 'error';
 			}
-		}
+		}		
 		
 	}
-	
-	
-	if ($_POST["action"] === 'debtor_one')		
-	{		
-		
-		$id = $_POST["id"];	
-		$param = "?action=debtor_one&id=".$id."";		
+
+	public static function getOne( int $id, string $param, string $url_api ) {
+			
 		$url = $url_api.$param;
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($client);		
-		echo $response;	
+		return $response;	
 		
-	}	
+	}
 	
-	
-	if ($_POST["action"] === 'update') 
-	{
-		
-		$form_data = array(
-			'name' => $_POST['name'],
-			'address' => $_POST['address'],
-			'cpf' => $_POST['cpf'],
-			'email' => $_POST['email'],
-			'birth' => $_POST['birth'],	
-			'id' => $_POST['id_debtor'],		
-		);
-
-		$param = "?action=update";		
+	public static function update( array $form_data, string $param, string $url_api ) {		
+			
 		$url = $url_api.$param;
-
-		$client = curl_init($url);
 		
+		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_POST, true);
 		curl_setopt($client, CURLOPT_POSTFIELDS, $form_data);
-		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-		
+		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);		
 		$response = curl_exec($client);		
-
 		curl_close($client);
+
 		$result = json_decode($response, true);
+		
 		foreach($result as $keys => $values){
+			
 			if($result[$keys]['success'] === '1')
 			{
-				echo 'update';
+				return 'update';
 			}
 			else
 			{
-				echo 'error';
+				return 'error';
 			}		
-		}		
+		}
+
 	}
 
+	public static function delete( int $id, string $param, string $url_api ) {
 
-	if ($_POST["action"] === 'delete')		
-	{
-		$id = $_POST["id"];	
-		$param = "?action=delete&id=".$id."";		
 		$url = $url_api.$param;
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($client);		
-		echo $response;	
-		
-	}		
-	
+		return $response;			
+	}
 }
 
 ?>

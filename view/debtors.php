@@ -83,7 +83,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		getData();
+		getData('debtors', '?action=get_all');
 
 		function Reset() 
 		{
@@ -96,10 +96,11 @@
 
 		}
 		
-		function getData()
+		function getData(type, param)
 		{
 			$.ajax({
 				url:"../api/getdataDebtors.php",
+				data: { type:type, param:param },
 				success: function(data)
 				{
 					$('tbody').html(data);					
@@ -126,17 +127,16 @@
 				var form1 = $(this).serialize();
 				
 				$.ajax({
-					url: "../controllers/save.php",
+					url: "../api/save.php",
 					method:"POST",
 					data:form1,
 					success:function(data)
 					{
-						
 						if (data === 'insert')
 						{
 							alert("Data inserted!");
 							Reset();
-							getData();
+							getData('debtors', '?action=get_all');
 						}
 						else if (data === 'error2')
 						{
@@ -146,7 +146,7 @@
 						{
 							alert("Data updated!");
 							Reset();
-							getData();						
+							getData('debtors', '?action=get_all');
 						
 						}
 					}
@@ -166,7 +166,7 @@
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../controllers/save.php",
+				url:"../api/save.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
@@ -181,7 +181,7 @@
 					$('#birth').val(data.birth);										
 				},
 				error: function(result) {
-                    console.log(result);
+                    console.log(result);					
                 }
 			});
 		});
@@ -198,13 +198,13 @@
 			{
 				
 				$.ajax({
-					url:"../controllers/save.php",
+					url:"../api/save.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)
 					{
 						Reset();
-						getData();						
+						getData('debtors', '?action=get_all');
 						
 						alert("Data deleted!");
 					}
