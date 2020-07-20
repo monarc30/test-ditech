@@ -203,6 +203,7 @@
 					data:{id:id,action:action},
 					success:function(data)
 					{
+						
 						Reset();
 						getData('debtors', '?action=get_all');
 						

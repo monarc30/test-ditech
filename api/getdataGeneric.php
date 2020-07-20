@@ -79,17 +79,16 @@ if ($_GET['action'] === "update_debtors_debt") {
 }
 
 if ($_GET['action'] === "delete") {
-
 	
-	$id_debtor = $Debtors->setid($_GET["id"]);	
+	$id_debtor = $Debtors->setid($_GET["id"]);
+	$id_debtor_debt = $DebtorsDebt->setid($_GET["id"]);
 
-	$res = $data->deleteDebtor( $Debtors );
+	$res = $data->deleteDebtor( $Debtors , $DebtorsDebt );
 }
 
 if ($_GET['action'] === "delete_debtors") {
 
 	$id_debtor_debt = $DebtorsDebt->setid($_GET["id"]);	
-
 	$res = $data->deleteDebtorDebt( $DebtorsDebt );
 	
 }

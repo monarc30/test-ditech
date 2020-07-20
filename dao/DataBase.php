@@ -205,23 +205,30 @@ class DataBase {
 	}
 	
 	
-	public function deleteDebtor( Debtors $debtors ){
+	public function deleteDebtor( Debtors $debtors, DebtorsDebt $DebtorsDebt ){
 		
-		$con = $this->getConn();	
+		$con = $this->getConn();			
+
+		$query_debtor = "delete from debtors_debt where id_debtor=".$DebtorsDebt->getid();
 		
-		$query = "delete from debtors where id=".$debtors->getid()."";
 		
-		if (mysqli_query($con,$query)) {
-			$data[] = array(
-				'success' => '1'
-			);
+		if (mysqli_query($con,$query_debtor)) {
+
+			$query = "delete from debtors where id=".$debtors->getid()."";
+
+			if (mysqli_query($con,$query)) {
+				$data[] = array(
+					'success' => '1'
+				);
+			}
+			else {
+				$data[] = array(
+					'success' => '0'
+				);
+			}
+			return $data;
+
 		}
-		else {
-			$data[] = array(
-				'success' => '0'
-			);
-		}
-		return $data;
 	}
 	
 	public function getDebtors(){
