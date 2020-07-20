@@ -16,7 +16,7 @@ if (isset($_POST["action"]))
 			'birth' => $_POST['birth'],			
 		);
 
-		$param = "?action=insert";				
+		$param = "?action=insert";
 
 		echo saveController::add( $form_data, $param, $url_api );		
 		

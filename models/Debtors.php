@@ -11,18 +11,9 @@ class Debtors {
 	private $created_date;	
 	private $updated_date;	
 	
-	public function __contruct(	int $id, string $name, string $address, 
-								string $cpf, string $email, DateTimeInterface $birth, 
-								DateTimeInterface $created_date, DateTimeInterface $updated_date ) 
+	public function __contruct() 
 	{
-		$this->id = $id;
-		$this->name = $name;
-		$this->address = $address;
-		$this->cpf = $cpf;
-		$this->email = $email;
-		$this->birth = $birth;
-		$this->created_date = $created_date;
-		$this->updated_date = $updated_date;
+		
 	}
 	
 	
@@ -43,7 +34,7 @@ class Debtors {
 	}	
 	
 	public function setAddress($address):void {
-		$this->name = $address;		
+		$this->address = $address;		
 	}
 	
 	public function getAddress():string {
@@ -51,7 +42,7 @@ class Debtors {
 	}
 	
 	public function setCpf($cpf):void {
-		$this->name = $cpf;		
+		$this->cpf = $cpf;		
 	}
 	
 	public function getCpf():string {
@@ -70,7 +61,7 @@ class Debtors {
 		$this->birth = $birth;
 	}
 	
-	public function getBirth():DateTimeInterface {
+	public function getBirth():string {
 		return $this->birth;		
 	}
 	

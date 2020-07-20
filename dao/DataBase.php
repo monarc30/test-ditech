@@ -1,5 +1,8 @@
 <?php
 
+require_once ( "../models/Debtors.php" );
+require_once ( "../models/DebtorsDebt.php" );
+
 class DataBase {
 	
 	private $host;
@@ -53,92 +56,160 @@ class DataBase {
 		return $rows;
 	}
 
-	public function insertDebtor(){
+	public function insertDebtorDebt( DebtorsDebt $DebtorsDebt ){
 		
-		$con = $this->getConn();		
+		$con = $this->getConn();
 		
-		if(isset($_POST["email"]))
+		if(isset($_POST["id_debtor"]))
 		{				
-			if ($this->getEmailByDebtor(null,$_POST["email"])==0) {
+			$query = "insert into debtors_debt (description,value,date_due,id_debtor) values (
+				
+				'".$DebtorsDebt->getDescription()."',
+				'".$DebtorsDebt->getValue()."',
+				'".$DebtorsDebt->getDatadue()."',				
+				'".$DebtorsDebt->getIddebtor()."')";
 
-				$query = "insert into debtors (name,address,cpf,email,birth) values (
-					'".$_POST['name']."',
-					'".$_POST['address']."',
-					'".$_POST['cpf']."',
-					'".$_POST['email']."',
-					'".$_POST['birth']."')";
-
-				if (mysqli_query($con,$query)) {
-					$data[] = array(
-						'success' => '1'
-					);
-				}
-				else {
-					$data[] = array(
-						'success' => '0'
-					);
-				}
-			}else{
+			if (mysqli_query($con,$query)) {
 				$data[] = array(
-					'success' => '2'
-				);		
-			}		
+					'success' => '1'
+				);
+			}
+			else {
+				$data[] = array(
+					'success' => '0'
+				);
+			}			
 		}else{
-			$data[] = array(
+			$data[] = array(	
 				'success' => '0'
 			);				
 		}
 		
 		return $data;
+	}
+
+	public function insertDebtor( Debtors $debtors ){
+		
+		$con = $this->getConn();		
+		
+		if ($this->getEmailByDebtor(null,$debtors->getEmail())==0) {
+
+			$query = "insert into debtors (name,address,cpf,email,birth) values (
+				'".$debtors->getName()."',
+				'".$debtors->getAddress()."',
+				'".$debtors->getCpf()."',
+				'".$debtors->getEmail()."',
+				'".$debtors->getBirth()."')";
+
+			if (mysqli_query($con,$query)) {
+				$data[] = array(
+					'success' => '1'
+				);
+			}
+			else {
+				$data[] = array(
+					'success' => '0'
+				);
+			}
+		}else{
+			$data[] = array(
+				'success' => '2'
+			);		
+		}		
+		
+		
+		return $data;
 	}	
-	
-	public function alterDebtor(){
+
+	public function alterDebtorDebt( DebtorsDebt $DebtorsDebt ){
 		
 		$con = $this->getConn();
 		
-		if(isset($_POST["email"]))
-		{				
-			if ($this->getEmailByDebtor($_POST['id'],$_POST["email"])==0) {
+		$DT = new DateTime();				
 
-				$DT = new DateTime();				
-
-				$query = "update debtors set 
-				name='".$_POST['name']."',
-				address='".$_POST['address']."',
-				cpf='".$_POST['cpf']."',
-				email='".$_POST['email']."',
-				birth='".$_POST['birth']."',
-				updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$_POST['id']."";
-				if (mysqli_query($con,$query)) {
-					$data[] = array(
-						'success' => '1'
-					);
-				}
-				else {
-					$data[] = array(
-						'success' => '0'
-					);
-				}
-			}else{
-				$data[] = array(
-					'success' => '2'
-				);		
-			}		
-		}else{
+		$query = "update debtors_debt set 
+		description='".$DebtorsDebt->getDescription()."',
+		value='".$DebtorsDebt->getValue()."',
+		date_due='".$DebtorsDebt->getDatadue()."',
+		id_debtor='".$DebtorsDebt->getIddebtor()."',				
+		updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$DebtorsDebt->getid()."";
+		
+		if (mysqli_query($con,$query)) {
+			$data[] = array(
+				'success' => '1'
+			);
+		}
+		else {
 			$data[] = array(
 				'success' => '0'
-			);				
+			);
 		}
 		
 		return $data;
 		
 	}
 	
-	public function deleteDebtor($id){
+	public function alterDebtor( Debtors $debtors ){
+		
+		$con = $this->getConn();		
+		
+		if ($this->getEmailByDebtor($_POST['id'],$debtors->getEmail())==0) {
+
+			$DT = new DateTime();				
+
+			$query = "update debtors set 
+			name='".$debtors->getName()."',
+			address='".$debtors->getAddress()."',
+			cpf='".$debtors->getCpf()."',
+			email='".$debtors->getEmail()."',
+			birth='".$debtors->getBirth()."',
+			updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$debtors->getid()."";
+
+			if (mysqli_query($con,$query)) {
+				$data[] = array(
+					'success' => '1'
+				);
+			}
+			else {
+				$data[] = array(
+					'success' => '0'
+				);
+			}
+		}else{
+			$data[] = array(
+				'success' => '2'
+			);		
+		}		
+	
+		
+		return $data;
+		
+	}
+
+	public function deleteDebtorDebt( DebtorsDebt $DebtorsDebt ){
 		
 		$con = $this->getConn();	
 		
-		$query = "delete from debtors where id=$id";
+		$query = "delete from debtors_debt where id=".$DebtorsDebt->getid()."";
+		
+		if (mysqli_query($con,$query)) {
+			$data[] = array(
+				'success' => '1'
+			);
+		}
+		else {
+			$data[] = array(
+				'success' => '0'
+			);
+		}
+	}
+	
+	
+	public function deleteDebtor( Debtors $debtors ){
+		
+		$con = $this->getConn();	
+		
+		$query = "delete from debtors where id=".$debtors->getid()."";
 		
 		if (mysqli_query($con,$query)) {
 			$data[] = array(
@@ -184,43 +255,52 @@ class DataBase {
 		
 		return $debtors;		
 	}
-	
-	public function debtor_one($id) {
+
+	public function debtor_one_debtors( DebtorsDebt $DebtorsDebt ) {
 		
-		$con = $this->getConn();			
-		$query = "select * from debtors where id=$id";
+		$con = $this->getConn();	
+		
+		$id = $DebtorsDebt->getid();
+
+		$query = "select * from debtors_debt where id=$id";
 		$res = mysqli_query($con,$query);		
 		
 		if (mysqli_query($con,$query)) {
 			while($row=mysqli_fetch_assoc($res)) 
 			{
 				$debtors['created_date'] = $row['created_date'];
-				$debtors['name'] = $row['name'];
-				$debtors['address'] = $row['address'];
-				$debtors['cpf'] = $row['cpf'];
-				$debtors['email'] = $row['email'];
-				$debtors['birth'] = $row['birth'];				
+				$debtors['description'] = $row['description'];
+				$debtors['value'] = $row['value'];
+				$debtors['date_due'] = $row['date_due'];
+				$debtors['id_debtor'] = $row['id_debtor'];				
 			}		
 			
 			return $debtors;		
 		}
 	}	
+	
+	public function debtor_one( Debtors $debtors ) {
 
-	/**
-	 * Get the value of table
-	 */ 
-	public function getTable():string
-	{
-		return $this->table;
-	}
+		$con = $this->getConn();
+		
+		$id = $debtors->getid();
+		
+		$query = "select * from debtors where id=$id";
 
-	/**
-	 * @return  self
-	 */ 
-	public function setTable($table)
-	{
-		$this->table = $table;
-
-		return $this;
-	}	
+		$res = mysqli_query($con,$query);		
+		
+		if (mysqli_query($con,$query)) {
+			while($row=mysqli_fetch_assoc($res)) 
+			{
+				$Debtors['created_date'] = $row['created_date'];
+				$Debtors['name'] = $row['name'];
+				$Debtors['address'] = $row['address'];
+				$Debtors['cpf'] = $row['cpf'];
+				$Debtors['email'] = $row['email'];
+				$Debtors['birth'] = $row['birth'];				
+			}		
+			
+			return $Debtors;		
+		}
+	}		
 }

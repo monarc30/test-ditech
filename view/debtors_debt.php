@@ -36,7 +36,7 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Data Debts Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Data Debtors Debts Form</h4></th></tr>
 				<tr style="text-align:center;">
 					<th>Name</th>
 					<th>Value</th>
@@ -59,7 +59,7 @@
 		<label>Value:</label>
 		<input class="form-control" type="text" name="value" id="value" size=10 required>	
 		<label>Due Date:</label>
-		<input class="form-control" type="date" name="data_due" id="data_due" required>	
+		<input class="form-control" type="date" name="date_due" id="date_due" required>	
 		<label>Debtor:</label>
 		<select id="id_debtor" name="id_debtor" required>
 			<option value="">-Select Debtor-</option>
@@ -125,42 +125,31 @@
 		
 		$('#form1').on('submit', function(event){
 			event.preventDefault();
+
+			var form1 = $(this).serialize();
 			
-			if ($('#cpf').val().length < 11) {
-				alert('CPF is invalid!');
-				$('#cpf').focus();
-				
-			}
-			else {
-				var form1 = $(this).serialize();
-				
-				$.ajax({
-					url: "../api/save.php",
-					method:"POST",
-					data:form1,
-					success:function(data)
+			$.ajax({
+				url: "../api/saveDebtorsDebt.php",
+				method:"POST",
+				data:form1,
+				success:function(data)
+				{	
+					if (data === 'insert')
 					{
-						
-						if (data === 'insert')
-						{
-							alert("Data inserted!");
-							Reset();
-							getData('debtors_debt', '?action=get_all_debts');
-						}
-						else if (data === 'error2')
-						{
-							alert("This email already exists in the database!");
-						}						
-						else if (data === 'update') 
-						{
-							alert("Data updated!");
-							Reset();
-							getData('debtors_debt', '?action=get_all_debts');
-						
-						}
+						alert("Data inserted!");
+						Reset();
+						getData('debtors_debt', '?action=get_all_debts');
 					}
-				});				
-			}
+					else if (data === 'update') 
+					{
+						alert("Data updated!");
+						Reset();
+						getData('debtors_debt', '?action=get_all_debts');
+					
+					}
+				}
+			});				
+			
 		});
 		
 		
@@ -168,26 +157,26 @@
 
 			var id = $(this).attr('id');			
 
-			var action = 'debtor_one';
+			var action = 'debtor_one_debtors_debt';
 			
 			$('#action').val('update');
 
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../api/save.php",
+				url:"../api/saveDebtorsDebt.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
 				success:function(data)
 				{
-					$('#id_debtor').val(id);
+					$('#id_debtor_debt').val(id);
 					$('#created_date').val(data.created_date);
-					$('#name').val(data.name);
-					$('#address').val(data.address);
-					$('#cpf').val(data.cpf);
-					$('#email').val(data.email);
-					$('#birth').val(data.birth);										
+					$('#description').val(data.description);
+					$('#value').val(data.value);
+					$('#date_due').val(data.date_due);
+					$('#id_debtor').val(data.id_debtor);
+
 				},
 				error: function(result) {
                     console.log(result);
@@ -207,7 +196,7 @@
 			{
 				
 				$.ajax({
-					url:"../api/save.php",
+					url:"../api/saveDebtorsDebt.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)

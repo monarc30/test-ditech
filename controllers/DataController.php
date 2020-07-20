@@ -38,7 +38,7 @@ class DataController {
                     <tr style="text-align:center">
                         <td>'.$row['description'].'</td>
                         <td>'.$row['value'].'</td>
-                        <td>'.$row['data_due'].'</td>				
+                        <td>'.$row['date_due'].'</td>				
                         <td><button name="edit" class="btn btn-primary edit" type=button id="'.$row['id'].'">Edit</button></td>
                         <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Delete</button></td>  
                     </tr>

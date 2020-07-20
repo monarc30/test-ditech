@@ -127,7 +127,7 @@
 				var form1 = $(this).serialize();
 				
 				$.ajax({
-					url: "../api/save.php",
+					url: "../api/saveDebtors.php",
 					method:"POST",
 					data:form1,
 					success:function(data)
@@ -166,7 +166,7 @@
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../api/save.php",
+				url:"../api/saveDebtors.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
@@ -198,7 +198,7 @@
 			{
 				
 				$.ajax({
-					url:"../api/save.php",
+					url:"../api/saveDebtors.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)

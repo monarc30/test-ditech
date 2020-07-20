@@ -11,17 +11,9 @@ class DebtorsDebt {
     private $id_debtor;	
     
 
-    public function __contruct(	int $id, string $description, float $value, 
-                                DateTimeInterface $date_due, DateTimeInterface $created_date, 
-                                DateTimeInterface $updated_date, int $id_debtor) 
+    public function __contruct() 
 	{
-		$this->id = $id;
-		$this->description = $description;
-        $this->value = $value;
-        $this->date_due = $date_due;
-		$this->created_date = $created_date;
-        $this->updated_date = $updated_date;
-        $this->id_debtor = $id_debtor;
+		
 	}
 	
 	
@@ -53,7 +45,7 @@ class DebtorsDebt {
 		$this->date_due = $date_due;
 	}
 	
-	public function getDatadue():DateTimeInterface {
+	public function getDatadue():string {
 		return $this->date_due;		
 	}
 	
@@ -77,7 +69,7 @@ class DebtorsDebt {
 		$this->id_debtor = $id_debtor;
 	}
 	
-	public function getIddebtor():DateTimeInterface {
+	public function getIddebtor():int {
 		return $this->id_debtor;		
 	}
 

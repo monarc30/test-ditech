@@ -19,7 +19,7 @@ CREATE TABLE `debtors` (
 
 CREATE TABLE `debtors_debt` ( 
   
-  `id` int(11) NOT NULL,  
+  `id` int(11) NOT NULL AUTO_INCREMENT,  
   `description` text,
   `value` float,
   `date_due` date,
