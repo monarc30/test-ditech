@@ -1,6 +1,6 @@
 <?php
 
-class Debtors {
+class Vendors {
 	
 	private $id;
 	private $name;
@@ -33,22 +33,6 @@ class Debtors {
 		return $this->name;		
 	}	
 	
-	public function setAddress($address):void {
-		$this->address = $address;		
-	}
-	
-	public function getAddress():string {
-		return $this->address;		
-	}
-	
-	public function setCpf($cpf):void {
-		$this->cpf = $cpf;		
-	}
-	
-	public function getCpf():string {
-		return $this->cpf;		
-	}
-	
 	public function setEmail($email):void {
 		$this->email = $email;
 	}
@@ -57,12 +41,12 @@ class Debtors {
 		return $this->email;		
 	}
 	
-	public function setBirth($birth):void {
-		$this->birth = $birth;
+	public function setCommission($commission):void {
+		$this->commission = $commission;
 	}
 	
-	public function getBirth():string {
-		return $this->birth;		
+	public function getCommission():string {
+		return $this->commission;		
 	}
 	
 	public function setCreateddate($created_date):void {

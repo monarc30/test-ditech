@@ -13,7 +13,7 @@
 <div class="container">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Receiv.it</a>
+		<a class="navbar-brand" href="#">tray</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -23,10 +23,10 @@
 					<a class="nav-link" href="..\index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#">Debtors</a>
+					<a class="nav-link disabled" href="#">Vendors</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="debtors_debt.php">Debtors Debts</a>
+					<a class="nav-link" href="vendors_sales.php">Vendors Sales</a>
 				</li>		
 			</ul>
 		</div>
@@ -36,11 +36,10 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Data Debtors Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Data Vendors Form</h4></th></tr>
 				<tr style="text-align:center;">
-					<th>Name</th>
-					<th>CPF</th>
-					<th>Email</th>
+					<th>Name</th>					
+					<th>Email</th>					
 					<th colspan=2>Action</th>
 				</tr>
 			</thead>
@@ -56,16 +55,12 @@
 		<input class="form-control" disabled type="text" name="created_date" id="created_date">	
 		<label>Name:</label>
 		<input class="form-control" type="text" name="name" id="name" size=100 required>	
-		<label>Address:</label>
-		<input class="form-control" type="text" name="address" id="address" size=100 required>	
-		<label>CPF:</label>
-		<input class="form-control" type="text" name="cpf" id="cpf" size=11 maxlength=11 required>	
 		<label>Email:</label>
 		<input class="form-control" type="text" name="email" id="email" size=100 required>	
-		<label>Date of birth:</label>
-		<input class="form-control" type="date" name="birth" id="birth" size=100 required>			
+		<label>Commission:</label>
+		<input class="form-control" type="text" name="commission" id="commission" size=3 value="8.5" readonly required>			
 		
-		<input type="hidden" name="id_debtor" id="id_debtor">
+		<input type="hidden" name="id_vendor" id="id_vendor">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
 		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
@@ -83,7 +78,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		getData('debtors', '?action=get_all');
+		getData('vendors', '?action=get_all');
 
 		function Reset() 
 		{
@@ -99,7 +94,7 @@
 		function getData(type, param)
 		{
 			$.ajax({
-				url:"../api/getdataDebtors.php",
+				url:"../api/getdataVendors.php",
 				data: { type:type, param:param },
 				success: function(data)
 				{
@@ -116,69 +111,62 @@
 		});
 		
 		$('#form1').on('submit', function(event){
-			event.preventDefault();
+			event.preventDefault();			
 			
-			if ($('#cpf').val().length < 11) {
-				alert('CPF is invalid!');
-				$('#cpf').focus();
-				
-			}
-			else {
-				var form1 = $(this).serialize();
-				
-				$.ajax({
-					url: "../api/saveDebtors.php",
-					method:"POST",
-					data:form1,
-					success:function(data)
+			var form1 = $(this).serialize();
+			
+			$.ajax({
+				url: "../api/saveVendors.php",
+				method:"POST",
+				data:form1,
+				success:function(data)
+				{
+					
+					if (data === 'insert')
 					{
-						if (data === 'insert')
-						{
-							alert("Data inserted!");
-							Reset();
-							getData('debtors', '?action=get_all');
-						}
-						else if (data === 'error2')
-						{
-							alert("This email already exists in the database!");
-						}						
-						else if (data === 'update') 
-						{
-							alert("Data updated!");
-							Reset();
-							getData('debtors', '?action=get_all');
-						
-						}
+						//alert("Data inserted!");
+						Reset();
+						getData('vendors', '?action=get_all');
 					}
-				});				
-			}
+					else if (data === 'error2')
+					{
+						alert("This email already exists in the database!");
+					}						
+					else if (data === 'update') 
+					{
+						//alert("Data updated!");
+						Reset();
+						getData('vendors', '?action=get_all');
+					
+					}
+				}
+			});				
+			
 		});
 		
 		
-		$(document).on('click', '.edit', function(){			
+		$(document).on('click', '.edit', function(){
 
 			var id = $(this).attr('id');			
 
-			var action = 'debtor_one';
+			var action = 'vendor_one';
 			
 			$('#action').val('update');
 
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../api/saveDebtors.php",
+				url:"../api/saveVendors.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
 				success:function(data)
 				{
-					$('#id_debtor').val(id);
+					$('#id_vendor').val(id);
 					$('#created_date').val(data.created_date);
 					$('#name').val(data.name);
-					$('#address').val(data.address);
-					$('#cpf').val(data.cpf);
 					$('#email').val(data.email);
-					$('#birth').val(data.birth);										
+					$('#commission').val(data.commission);										
 				},
 				error: function(result) {
                     console.log(result);					
@@ -198,16 +186,16 @@
 			{
 				
 				$.ajax({
-					url:"../api/saveDebtors.php",
+					url:"../api/saveVendors.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)
 					{
 						
 						Reset();
-						getData('debtors', '?action=get_all');
+						getData('vendors', '?action=get_all');
 						
-						alert("Data deleted!");
+						//alert("Data deleted!");
 					}
 				});
 				

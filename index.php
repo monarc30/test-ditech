@@ -13,7 +13,7 @@
 
     <div class="header">
 
-        <h1>Receiv.it</h1>
+        <h1>tray</h1>
 
     </div>
 
@@ -21,13 +21,13 @@
 
     <div class="content">
     
-        <a href="view\debtors.php" class="btn btn-primary">View Debtors</a>
-        <a href="view\debtors_debt.php" class="btn btn-primary">View Doubts Users</a>	
+        <a href="view\vendors.php" class="btn btn-primary">View Vendors</a>
+        <a href="view\vendors_sales.php" class="btn btn-primary">View Vendors Sales</a>	
 
     </div>
 
     <div class="footer">
-        @copyright 2020 - Receiv.it
+        @copyright 2020 - tray
     </div>
 
 </div>

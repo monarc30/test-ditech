@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
+
 require_once ( "../env.php" );
 
 require_once ( "../controllers/saveController.php" ); 
@@ -10,10 +14,8 @@ if (isset($_POST["action"]))
 	{
 		$form_data = array(
 			'name' => $_POST['name'],
-			'address' => $_POST['address'],
-			'cpf' => $_POST['cpf'],
 			'email' => $_POST['email'],
-			'birth' => $_POST['birth'],			
+			'commission' => $_POST['commission'],			
 		);
 
 		$param = "?action=insert";
@@ -23,11 +25,11 @@ if (isset($_POST["action"]))
 	}
 	
 	
-	if ($_POST["action"] === 'debtor_one')		
+	if ($_POST["action"] === 'vendor_one')		
 	{		
 		
 		$id = $_POST["id"];	
-		$param = "?action=debtor_one&id=".$id."";		
+		$param = "?action=vendor_one&id=".$id."";		
 		
 		echo saveController::getOne( $id, $param, $url_api );		
 		
@@ -39,11 +41,9 @@ if (isset($_POST["action"]))
 		
 		$form_data = array(
 			'name' => $_POST['name'],
-			'address' => $_POST['address'],
-			'cpf' => $_POST['cpf'],
 			'email' => $_POST['email'],
-			'birth' => $_POST['birth'],	
-			'id' => $_POST['id_debtor'],		
+			'commission' => $_POST['commission'],	
+			'id' => $_POST['id_vendor'],		
 		);
 
 		$param = "?action=update";				

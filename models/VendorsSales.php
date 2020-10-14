@@ -1,14 +1,14 @@
 <?php
 
-class DebtorsDebt {
+class VendorsSales {
 	
 	private $id;
-	private $description;
+	private $commission;
 	private $value;
-	private $date_due;
+	private $date;
 	private $created_date;	
     private $updated_date;	
-    private $id_debtor;	
+    private $id_vendor;	
     
 
     public function __contruct() 
@@ -25,12 +25,12 @@ class DebtorsDebt {
 		return $this->id;
 	}
 	
-	public function setDescription($description):void {
-		$this->description = $description;		
+	public function setCommission($commission):void {
+		$this->commission = $commission;		
 	}
 	
-	public function getDescription():string {
-		return $this->description;		
+	public function getCommission():string {
+		return $this->commission;		
 	}	
 	
 	public function setValue($value):void {
@@ -41,12 +41,12 @@ class DebtorsDebt {
 		return $this->value;		
 	}
 	
-	public function setDatadue($date_due):void {
-		$this->date_due = $date_due;
+	public function setData($date):void {
+		$this->date = $date;
 	}
 	
-	public function getDatadue():string {
-		return $this->date_due;		
+	public function getData():string {
+		return $this->date;		
 	}
 	
 	public function setCreateddate($created_date):void {
@@ -65,12 +65,12 @@ class DebtorsDebt {
 		return $this->updated_date;		
     }    
 	
-	public function setIddebtor($id_debtor):void {
-		$this->id_debtor = $id_debtor;
+	public function setIdvendor($id_vendor):void {
+		$this->id_vendor = $id_vendor;
 	}
 	
-	public function getIddebtor():int {
-		return $this->id_debtor;		
+	public function getIdvendor():int {
+		return $this->id_vendor;		
 	}
 
 }

@@ -1,7 +1,7 @@
 <?php
 
-require_once ( "../models/Debtors.php" );
-require_once ( "../models/DebtorsDebt.php" );
+require_once ( "../models/Vendors.php" );
+require_once ( "../models/VendorsSales.php" );
 
 class DataBase {
 	
@@ -28,7 +28,7 @@ class DataBase {
 		return $this->con = mysqli_connect($this->host, $this->user, $this->pass, $this->bd);
 	}
 	
-	public function getEmailByDebtor($id=null,$email){
+	public function getEmailByVendor(int $id=null, string $email):int{
 		$con = $this->getConn();	
 
 		$and_id = null;
@@ -36,38 +36,25 @@ class DataBase {
 		if ($id!=null) 
 			$and_id = " and id != $id ";
 		
-		$query = "select email from debtors where email='$email' $and_id ";
+		$query = "select email from vendors where email='$email' $and_id ";
+
 		$res = mysqli_query($con,$query);
 		$rows = mysqli_num_rows($res);
 		return $rows;
 	}
 
-	public function getCPF_Exists($id=null,$cpf){
-		$con = $this->getConn();	
-
-		$and_id = null;
-		
-		if ($id!=null) 
-			$and_id = " and id != $id ";
-		
-		$query = "select cpf from debtors where cpf='$cpf' $and_id ";
-		$res = mysqli_query($con,$query);
-		$rows = mysqli_num_rows($res);
-		return $rows;
-	}
-
-	public function insertDebtorDebt( DebtorsDebt $DebtorsDebt ){
+	public function insertVendorSales( VendorsSales $VendorsSales ):array{
 		
 		$con = $this->getConn();
 		
-		if(isset($_POST["id_debtor"]))
+		if(isset($_POST["id_vendor"]))
 		{				
-			$query = "insert into debtors_debt (description,value,date_due,id_debtor) values (
+			$query = "insert into vendors_sales (commission,value,date,id_vendor) values (
 				
-				'".$DebtorsDebt->getDescription()."',
-				'".$DebtorsDebt->getValue()."',
-				'".$DebtorsDebt->getDatadue()."',				
-				'".$DebtorsDebt->getIddebtor()."')";
+				'".$VendorsSales->getCommission()."',
+				'".$VendorsSales->getValue()."',
+				'".$VendorsSales->getData()."',				
+				'".$VendorsSales->getIdVendor()."')";
 
 			if (mysqli_query($con,$query)) {
 				$data[] = array(
@@ -88,18 +75,16 @@ class DataBase {
 		return $data;
 	}
 
-	public function insertDebtor( Debtors $debtors ){
+	public function insertVendors( Vendors $Vendors ):array{
 		
 		$con = $this->getConn();		
 		
-		if ($this->getEmailByDebtor(null,$debtors->getEmail())==0) {
+		if ($this->getEmailByVendor(null,$Vendors->getEmail())==0) {
 
-			$query = "insert into debtors (name,address,cpf,email,birth) values (
-				'".$debtors->getName()."',
-				'".$debtors->getAddress()."',
-				'".$debtors->getCpf()."',
-				'".$debtors->getEmail()."',
-				'".$debtors->getBirth()."')";
+			$query = "insert into vendors (name,email,commission) values (
+				'".$Vendors->getName()."',
+				'".$Vendors->getEmail()."',
+				'".$Vendors->getCommission()."')";
 
 			if (mysqli_query($con,$query)) {
 				$data[] = array(
@@ -121,19 +106,19 @@ class DataBase {
 		return $data;
 	}	
 
-	public function alterDebtorDebt( DebtorsDebt $DebtorsDebt ){
+	public function alterVendorSales( VendorsSales $VendorsSales ):array{
 		
 		$con = $this->getConn();
 		
 		$DT = new DateTime();				
 
-		$query = "update debtors_debt set 
-		description='".$DebtorsDebt->getDescription()."',
-		value='".$DebtorsDebt->getValue()."',
-		date_due='".$DebtorsDebt->getDatadue()."',
-		id_debtor='".$DebtorsDebt->getIddebtor()."',				
-		updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$DebtorsDebt->getid()."";
-		
+		$query = "update vendors_sales set 
+		commission='".$VendorsSales->getCommission()."',
+		value='".$VendorsSales->getValue()."',
+		date='".$VendorsSales->getData()."',
+		id_vendor='".$VendorsSales->getIdVendor()."',				
+		updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$VendorsSales->getid()."";
+
 		if (mysqli_query($con,$query)) {
 			$data[] = array(
 				'success' => '1'
@@ -149,21 +134,19 @@ class DataBase {
 		
 	}
 	
-	public function alterDebtor( Debtors $debtors ){
+	public function alterVendor( Vendors $Vendors ):array{
 		
 		$con = $this->getConn();		
-		
-		if ($this->getEmailByDebtor($_POST['id'],$debtors->getEmail())==0) {
+
+		if ($this->getEmailByVendor($_POST['id'],$Vendors->getEmail())==0) {
 
 			$DT = new DateTime();				
 
-			$query = "update debtors set 
-			name='".$debtors->getName()."',
-			address='".$debtors->getAddress()."',
-			cpf='".$debtors->getCpf()."',
-			email='".$debtors->getEmail()."',
-			birth='".$debtors->getBirth()."',
-			updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$debtors->getid()."";
+			$query = "update vendors set 
+			name='".$Vendors->getName()."',
+			email='".$Vendors->getEmail()."',
+			commission='".$Vendors->getCommission()."',
+			updated_date='".$DT->format( "Y-m-d H:i:s" )."' where id=".$Vendors->getid()."";
 
 			if (mysqli_query($con,$query)) {
 				$data[] = array(
@@ -186,11 +169,13 @@ class DataBase {
 		
 	}
 
-	public function deleteDebtorDebt( DebtorsDebt $DebtorsDebt ){
+	public function deleteVendorSales( VendorsSales $VendorsSales ):array{
 		
 		$con = $this->getConn();	
 		
-		$query = "delete from debtors_debt where id=".$DebtorsDebt->getid()."";
+		$query = "delete from vendors_sales where id=".$VendorsSales->getid()."";
+
+		echo $query;
 		
 		if (mysqli_query($con,$query)) {
 			$data[] = array(
@@ -202,19 +187,20 @@ class DataBase {
 				'success' => '0'
 			);
 		}
+		return $data;
 	}
 	
 	
-	public function deleteDebtor( Debtors $debtors, DebtorsDebt $DebtorsDebt ){
+	public function deleteVendor( Vendors $Vendors, VendorsSales $VendorsSales ):array{
 		
 		$con = $this->getConn();			
 
-		$query_debtor = "delete from debtors_debt where id_debtor=".$DebtorsDebt->getid();
+		$query_vendor = "delete from vendors_sales where id_vendor=".$VendorsSales->getid();
 		
 		
-		if (mysqli_query($con,$query_debtor)) {
+		if (mysqli_query($con,$query_vendor)) {
 
-			$query = "delete from debtors where id=".$debtors->getid()."";
+			$query = "delete from vendors where id=".$Vendors->getid()."";
 
 			if (mysqli_query($con,$query)) {
 				$data[] = array(
@@ -231,83 +217,89 @@ class DataBase {
 		}
 	}
 	
-	public function getDebtors(){
+	public function getVendors():array{
 		
 		$con = $this->getConn();	
 		
-		$debtors = array();		
-		$query = "select * from debtors";
+		$Vendors = array();		
+		$query = "select * from vendors";
 		$res = mysqli_query($con,$query);		
 		
 		while($row=mysqli_fetch_assoc($res)) 
 		{
-			$debtors[] = $row;
+			$Vendors[] = $row;
 		}		
 		
-		return $debtors;		
+		return $Vendors;		
 	}
 
-	public function getDebtorsDebt(){
+	public function getVendorsSales():array{
 		
 		$con = $this->getConn();	
 		
-		$debtors = array();		
-		$query = "select * from debtors_debt";
+		$Vendors = array();		
+		$query = "select a.name,a.email,b.id,b.commission,b.value,b.date,b.created_date from vendors a inner join vendors_sales b on a.id = b.id_vendor";
 		$res = mysqli_query($con,$query);		
 		
 		while($row=mysqli_fetch_assoc($res)) 
 		{
-			$debtors[] = $row;
+			$Vendors[] = $row;
 		}		
 		
-		return $debtors;		
+		return $Vendors;		
 	}
 
-	public function debtor_one_debtors( DebtorsDebt $DebtorsDebt ) {
+	public function vendor_one_vendors( VendorsSales $VendorsSales ):array {
 		
 		$con = $this->getConn();	
 		
-		$id = $DebtorsDebt->getid();
+		$id = $VendorsSales->getid();
 
-		$query = "select * from debtors_debt where id=$id";
-		$res = mysqli_query($con,$query);		
+		$query = "select * from vendors_sales where id=$id";
+		$res = mysqli_query($con,$query);
+		
+		$vendors = array();
 		
 		if (mysqli_query($con,$query)) {
 			while($row=mysqli_fetch_assoc($res)) 
 			{
-				$debtors['created_date'] = $row['created_date'];
-				$debtors['description'] = $row['description'];
-				$debtors['value'] = $row['value'];
-				$debtors['date_due'] = $row['date_due'];
-				$debtors['id_debtor'] = $row['id_debtor'];				
+				$date = $row['date'];				
+				$date_time = new DateTime($date);
+				$brazil_date = $date_time->format('Y-m-d');
+				
+				$vendors['created_date'] = $row['created_date'];
+				$vendors['commission'] = $row['commission'];
+				$vendors['value'] = $row['value'];
+				$vendors['date'] = $brazil_date;
+				$vendors['id_vendor'] = $row['id_vendor'];				
 			}		
 			
-			return $debtors;		
+			return $vendors;		
 		}
 	}	
 	
-	public function debtor_one( Debtors $debtors ) {
+	public function Vendor_one( Vendors $Vendors ):array {
 
 		$con = $this->getConn();
 		
-		$id = $debtors->getid();
+		$id = $Vendors->getid();
 		
-		$query = "select * from debtors where id=$id";
+		$query = "select * from vendors where id=$id";
 
-		$res = mysqli_query($con,$query);		
+		$res = mysqli_query($con,$query);
+		
+		$vendors = array();
 		
 		if (mysqli_query($con,$query)) {
 			while($row=mysqli_fetch_assoc($res)) 
 			{
-				$Debtors['created_date'] = $row['created_date'];
-				$Debtors['name'] = $row['name'];
-				$Debtors['address'] = $row['address'];
-				$Debtors['cpf'] = $row['cpf'];
-				$Debtors['email'] = $row['email'];
-				$Debtors['birth'] = $row['birth'];				
+				$vendors['created_date'] = $row['created_date'];
+				$vendors['name'] = $row['name'];
+				$vendors['email'] = $row['email'];
+				$vendors['commission'] = $row['commission'];				
 			}		
 			
-			return $Debtors;		
+			return $vendors;		
 		}
 	}		
 }

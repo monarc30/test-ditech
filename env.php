@@ -2,12 +2,12 @@
 
 putenv('DISPLAY_ERRORS_DETAILS='. true);
 
-$url = 'http://localhost/test_receiv';
+$url = 'http://test-tray';
 
 $url_api = $url . "/api/getdataGeneric.php";
 
-$host = '';
-$dbname = '';
-$user = '';
-$password = '';
+$host = 'localhost';
+$dbname = 'DB_TRAY';
+$user = 'root';
+$password = 'root';
 $port = '';

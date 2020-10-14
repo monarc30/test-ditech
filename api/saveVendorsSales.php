@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
+
 require_once ( "../env.php" );
 
 require_once ( "../controllers/saveController.php" ); 
@@ -10,24 +14,24 @@ if (isset($_POST["action"]))
 	{
 		$form_data = array(
 			
-			'description' => $_POST['description'],
+			'commission' => $_POST['commission'],
 			'value' => $_POST['value'],
-			'date_due' => $_POST['date_due'],
-			'id_debtor' => $_POST['id_debtor']			
+			'date' => $_POST['date'],
+			'id_vendor' => $_POST['id_vendor']			
 		);
 
-		$param = "?action=insert_debtors_debt";				
+		$param = "?action=insert_vendors_sales";				
 
 		echo saveController::add( $form_data, $param, $url_api );
 		
 	}
 	
 	
-	if ($_POST["action"] === 'debtor_one_debtors_debt')		
+	if ($_POST["action"] === 'vendor_one_vendors_sales')		
 	{		
 		
 		$id = $_POST["id"];	
-		$param = "?action=debtor_one_debtors_debt&id=".$id."";		
+		$param = "?action=vendor_one_vendors_sales&id=".$id."";				
 		
 		echo saveController::getOne( $id, $param, $url_api );		
 		
@@ -37,14 +41,14 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'update') 
 	{
 		$form_data = array(
-			'description' => $_POST['description'],
+			'commission' => $_POST['commission'],
 			'value' => $_POST['value'],
-			'date_due' => $_POST['date_due'],
-			'id_debtor' => $_POST['id_debtor'],			
-			'id' => $_POST['id_debtor_debt'],		
+			'date' => $_POST['date'],
+			'id_vendor' => $_POST['id_vendor'],			
+			'id' => $_POST['id_vendor_sales'],		
 		);
 
-		$param = "?action=update_debtors_debt";				
+		$param = "?action=update_vendors_sales";				
 
 		echo saveController::update( $form_data, $param, $url_api );
 		
@@ -54,8 +58,8 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'delete')		
 	{
 		$id = $_POST["id"];	
-		$param = "?action=delete_debtors&id=".$id."";		
-		
+		$param = "?action=delete_vendors&id=".$id."";		
+
 		echo saveController::delete( $id, $param, $url_api );
 
 		$client = curl_init($url);

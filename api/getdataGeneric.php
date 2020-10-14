@@ -1,95 +1,93 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
+
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 
-require_once ( "../models/Debtors.php" );
-require_once ( "../models/DebtorsDebt.php" );
+require_once ( "../models/Vendors.php" );
+require_once ( "../models/VendorsSales.php" );
 
 $data = new DataBase( $host, $user, $password, $dbname );
 
-$Debtors = new Debtors();
-$DebtorsDebt = new DebtorsDebt();
+$Vendors = new Vendors();
+$VendorsSales = new VendorsSales();
 
 if ($_GET['action'] === "get_all") {
-	$res = $data->getDebtors();
+	$res = $data->getVendors();
 }
 
-if ($_GET['action'] === "get_all_debts") {
-	$res = $data->getDebtorsDebt();
+if ($_GET['action'] === "get_all_sales") {
+	$res = $data->getVendorsSales();
 }
 
 if ($_GET['action'] === "insert") {
-
 	
-	$name = $Debtors->setName($_POST['name']);
-	$address = $Debtors->setAddress($_POST['address']);
-	$cpf = $Debtors->setCpf($_POST['cpf']);
-	$email = $Debtors->setEmail($_POST['email']);
-	$birth = $Debtors->setBirth($_POST['birth']);	
+	$name = $Vendors->setName($_POST['name']);
+	$email = $Vendors->setEmail($_POST['email']);
+	$commission = $Vendors->setcommission($_POST['commission']);	
 
-	$res = $data->insertDebtor( $Debtors );
+	$res = $data->insertVendors( $Vendors );
 }
 
-if ($_GET['action'] === "insert_debtors_debt") {	
+if ($_GET['action'] === "insert_vendors_sales") {	
 	
-	$description = $DebtorsDebt->setDescription($_POST['description']);
-	$value = $DebtorsDebt->setValue($_POST['value']);
-	$date_due = $DebtorsDebt->setDatadue($_POST['date_due']);
-	$id_debtor = $DebtorsDebt->setIddebtor($_POST['id_debtor']);	
+	$commission = $VendorsSales->setcommission($_POST['commission']);
+	$value = $VendorsSales->setValue($_POST['value']);
+	$date = $VendorsSales->setData($_POST['date']);
+	$id_vendor = $VendorsSales->setIdvendor($_POST['id_vendor']);	
 	
-	$res = $data->insertDebtorDebt( $DebtorsDebt );
+	$res = $data->insertVendorSales( $VendorsSales );
 }
 
-if ($_GET['action'] === "debtor_one") {	
+if ($_GET['action'] === "vendor_one") {	
 	
-	$id_debtor = $Debtors->setid($_GET["id"]);	
-	$res = $data->debtor_one( $Debtors );
+	$id_vendor = $Vendors->setid($_GET["id"]);	
+	$res = $data->vendor_one( $Vendors );
 
 }
 
-if ($_GET['action'] === "debtor_one_debtors_debt") {
+if ($_GET['action'] === "vendor_one_vendors_sales") {
 
-	$id_debtor_debt = $DebtorsDebt->setid($_GET["id"]);	
-	$res = $data->debtor_one_debtors( $DebtorsDebt );
+	$id_vendor_sale = $VendorsSales->setid($_GET["id"]);	
+	$res = $data->vendor_one_vendors( $VendorsSales );
 }
 
 if ($_GET['action'] === "update") {
+
+	$name = $Vendors->setName($_POST['name']);
+	$email = $Vendors->setEmail($_POST['email']);
+	$commission = $Vendors->setcommission($_POST['commission']);
+	$id = $Vendors->setid($_POST['id']);	
 	
-	$name = $Debtors->setName($_POST['name']);
-	$address = $Debtors->setAddress($_POST['address']);
-	$cpf = $Debtors->setCpf($_POST['cpf']);
-	$email = $Debtors->setEmail($_POST['email']);
-	$birth = $Debtors->setBirth($_POST['birth']);
-	$id = $Debtors->setid($_POST['id']);	
-	
-	$res = $data->alterDebtor( $Debtors );
+	$res = $data->altervendor( $Vendors );
 }
 
-if ($_GET['action'] === "update_debtors_debt") {
+if ($_GET['action'] === "update_vendors_sales") {
 
+	$commission = $VendorsSales->setCommission($_POST['commission']);
+	$value = $VendorsSales->setValue($_POST['value']);
+	$date = $VendorsSales->setData($_POST['date']);
+	$id_vendor = $VendorsSales->setIdvendor($_POST['id_vendor']);
+	$id = $VendorsSales->setid($_POST['id']);
 
-	$description = $DebtorsDebt->setDescription($_POST['description']);
-	$value = $DebtorsDebt->setValue($_POST['value']);
-	$date_due = $DebtorsDebt->setDatadue($_POST['date_due']);
-	$id_debtor = $DebtorsDebt->setIddebtor($_POST['id_debtor']);
-	$id = $DebtorsDebt->setid($_POST['id']);
-
-	$res = $data->alterDebtorDebt( $DebtorsDebt );
+	$res = $data->alterVendorSales( $VendorsSales );
 }
 
 if ($_GET['action'] === "delete") {
 	
-	$id_debtor = $Debtors->setid($_GET["id"]);
-	$id_debtor_debt = $DebtorsDebt->setid($_GET["id"]);
+	$id_vendor = $Vendors->setid($_GET["id"]);
+	$id_vendor_sales = $VendorsSales->setid($_GET["id"]);
 
-	$res = $data->deleteDebtor( $Debtors , $DebtorsDebt );
+	$res = $data->deleteVendor( $Vendors , $VendorsSales );
 }
 
-if ($_GET['action'] === "delete_debtors") {
+if ($_GET['action'] === "delete_vendors") {
 
-	$id_debtor_debt = $DebtorsDebt->setid($_GET["id"]);	
-	$res = $data->deleteDebtorDebt( $DebtorsDebt );
+	$id_vendor_sales = $VendorsSales->setid($_GET["id"]);	
+	$res = $data->deleteVendorSales( $VendorsSales );
 	
 }
 

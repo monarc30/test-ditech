@@ -13,7 +13,7 @@
 <div class="container">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Receiv.it</a>
+		<a class="navbar-brand" href="#">tray</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -23,10 +23,10 @@
 					<a class="nav-link" href="../index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="debtors.php">Debtors</a>
+					<a class="nav-link" href="vendors.php">Vendors</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#">Debtors Debts</a>
+					<a class="nav-link disabled" href="#">Vendors Sales</a>
 				</li>		
 			</ul>
 		</div>
@@ -36,11 +36,12 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Data Debtors Debts Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Data Vendors Sales Form</h4></th></tr>
 				<tr style="text-align:center;">
-					<th>Name</th>
+					<th>Vendor</th>
 					<th>Value</th>
-					<th>Due Data</th>
+					<th>Commission</th>
+					<th>Date</th>
 					<th colspan=2>Action</th>
 				</tr>
 			</thead>
@@ -54,18 +55,18 @@
 		
 		<label>Created Date:</label>
 		<input class="form-control" disabled type="text" name="created_date" id="created_date">	
-		<label>Description:</label>
-		<textarea class="form-control" name="description" id="description" required></textarea>
 		<label>Value:</label>
-		<input class="form-control" type="text" name="value" id="value" size=10 required>	
-		<label>Due Date:</label>
-		<input class="form-control" type="date" name="date_due" id="date_due" required>	
-		<label>Debtor:</label>
-		<select id="id_debtor" name="id_debtor" required>
-			<option value="">-Select Debtor-</option>
+		<input class="form-control" type="text" name="value" id="value" onBlur="calculates_commission(this.value)" size=10 required>	
+		<label>Commission:</label>
+		<input type="text" class="form-control" name="commission" id="commission" value="8.5" readonly required>		
+		<label>Date:</label>
+		<input class="form-control" type="date" name="date" id="date" required>	
+		<label>Vendor:</label>
+		<select id="id_vendor" name="id_vendor" required>
+			<option value="">-Select Vendor-</option>
 		</select>					
 		
-		<input type="hidden" name="id_debtor_debt" id="id_debtor_debt">
+		<input type="hidden" name="id_vendor_sales" id="id_vendor_sales">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
 		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
@@ -80,12 +81,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+<script>
+	function calculates_commission(value){
+
+		var commission = 8.5;
+
+		$("#commission").val(value*commission/100);
+
+	}
+</script>
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		getData('debtors_debt', '?action=get_all_debts');
+		getData('vendors_sales', '?action=get_all_sales');
 
-		getData('id_debtor', '?action=get_all');
+		getData('id_vendor', '?action=get_all');
 
 		function Reset() 
 		{
@@ -101,16 +112,16 @@
 		function getData( type, param )
 		{
 			$.ajax({
-				url:"../api/getdataDebtors.php",
+				url:"../api/getdataVendors.php",
 				data: { type: type, param: param },
 				success: function(data)
 				{
-					if (type=='debtors_debt') {
+					if (type=='vendors_sales') {
 						$('tbody').html(data);
 					}
 					else{
 						
-						$('#id_debtor').append(data);
+						$('#id_vendor').append(data);
 					}
 
 				}
@@ -129,24 +140,21 @@
 			var form1 = $(this).serialize();
 			
 			$.ajax({
-				url: "../api/saveDebtorsDebt.php",
+				url: "../api/saveVendorsSales.php",
 				method:"POST",
 				data:form1,
 				success:function(data)
 				{	
 					if (data === 'insert')
 					{
-						alert("Data inserted!");
-						Reset();
-						getData('debtors_debt', '?action=get_all_debts');
+						//alert("Data inserted!");						
 					}
 					else if (data === 'update') 
 					{
-						alert("Data updated!");
-						Reset();
-						getData('debtors_debt', '?action=get_all_debts');
-					
+						//alert("Data updated!");											
 					}
+					Reset();
+					getData('vendors_sales', '?action=get_all_sales');
 				}
 			});				
 			
@@ -155,31 +163,33 @@
 		
 		$(document).on('click', '.edit', function(){			
 
-			var id = $(this).attr('id');			
+			var id = $(this).attr('id');
 
-			var action = 'debtor_one_debtors_debt';
-			
+			var action = 'vendor_one_vendors_sales';
+
 			$('#action').val('update');
 
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../api/saveDebtorsDebt.php",
+				url:"../api/saveVendorsSales.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
+
 				success:function(data)
 				{
-					$('#id_debtor_debt').val(id);
+					
+					$('#id_vendor_sales').val(id);
 					$('#created_date').val(data.created_date);
-					$('#description').val(data.description);
+					$('#commission').val(data.commission);
 					$('#value').val(data.value);
-					$('#date_due').val(data.date_due);
-					$('#id_debtor').val(data.id_debtor);
+					$('#date').val(data.date);
+					$('#id_vendor').val(data.id_vendor);
 
 				},
 				error: function(result) {
-                    console.log(result);
+					console.log(result);
                 }
 			});
 		});
@@ -196,15 +206,15 @@
 			{
 				
 				$.ajax({
-					url:"../api/saveDebtorsDebt.php",
+					url:"../api/saveVendorsSales.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)
 					{
 						Reset();
-						getData('debtors_debt','?action=get_all_debts');
+						getData('vendors_sales','?action=get_all_sales');
 						
-						alert("Data deleted!");
+						//alert("Data deleted!");
 					}
 				});
 				

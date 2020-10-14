@@ -7,11 +7,10 @@ if (isset($_POST["action"]))
 		$form_data = array(
 			'name' => $_POST['name'],
 			'email' => $_POST['email'],
-			'birth' => $_POST['birth'],
-			'password' => $_POST['password'],
+			'commition' => $_POST['commition'],			
 		);
 
-		$url = "http://localhost/teste_api/getUsers.php?action=insert";
+		$url = "http://test_tray/getUsers.php?action=insert";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_POST, true);		
 		curl_setopt($client, CURLOPT_POSTFIELDS, $form_data);		
@@ -43,7 +42,7 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'user_one')		
 	{
 		$id = $_POST["id"];
-		$url = "http://localhost/teste_api/getUsers.php?action=user_one&id=".$id."";
+		$url = "http://test-tray/getUsers.php?action=user_one&id=".$id."";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($client);		
@@ -58,11 +57,10 @@ if (isset($_POST["action"]))
 		$form_data = array(						
 			'name' 				=> $_POST['name'],
 			'email' 			=> $_POST['email'],
-			'birth' 			=> $_POST['birth'],
-			'password' 			=> $_POST['password'],
+			'commition' 		=> $_POST['commition'],			
 			'id'				=> $_POST['id_user'],
 		);
-		$url = "http://localhost/teste_api/getUsers.php?action=update";
+		$url = "http://test-tray/getUsers.php?action=update";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_POST, true);
 		curl_setopt($client, CURLOPT_POSTFIELDS, $form_data);
@@ -86,7 +84,7 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'delete')		
 	{
 		$id = $_POST["id"];
-		$url = "http://localhost/teste_api/getUsers.php?action=delete&id=".$id."";
+		$url = "http://test-tray/getUsers.php?action=delete&id=".$id."";
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($client);		
