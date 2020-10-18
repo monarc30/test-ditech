@@ -12,6 +12,7 @@ Atenção!!!
 renomear arquivo env.example.php para env.php e inserir o host conforme exemplo acima,
 utilizar este mesmo host no arquivo env.php
 
+alterar o email padrão para recebimento do relatório.
 
 
 
