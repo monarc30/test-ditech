@@ -23,6 +23,7 @@
     
         <a href="view\vendors.php" class="btn btn-primary">View Vendors</a>
         <a href="view\vendors_sales.php" class="btn btn-primary">View Vendors Sales</a>	
+        <a href="view\sales_report.php" class="btn btn-primary">View Report Form</a>	
 
     </div>
 

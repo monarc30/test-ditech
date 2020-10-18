@@ -72,5 +72,5 @@ class VendorsSales {
 	public function getIdvendor():int {
 		return $this->id_vendor;		
 	}
-
+	
 }

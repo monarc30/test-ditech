@@ -27,7 +27,10 @@
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="vendors_sales.php">Vendors Sales</a>
-				</li>		
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="sales_report.php">Sales Report</a>
+				</li>							
 			</ul>
 		</div>
 	</nav>
@@ -36,7 +39,7 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Data Vendors Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Vendors Form</h4></th></tr>
 				<tr style="text-align:center;">
 					<th>Name</th>					
 					<th>Email</th>					
@@ -49,8 +52,8 @@
 
 	</div>
 
-	<form name="form1" id="form1" method="post">
-		
+	<form name="form1" id="form1" method="post">	
+
 		<label>Created Date:</label>
 		<input class="form-control" disabled type="text" name="created_date" id="created_date">	
 		<label>Name:</label>
@@ -162,6 +165,7 @@
 				dataType:"json",				
 				success:function(data)
 				{
+					
 					$('#id_vendor').val(id);
 					$('#created_date').val(data.created_date);
 					$('#name').val(data.name);

@@ -2,6 +2,7 @@
 
 require_once ( "../models/Vendors.php" );
 require_once ( "../models/VendorsSales.php" );
+require_once ( "../models/Email.php" );
 
 class DataBase {
 	
@@ -31,6 +32,8 @@ class DataBase {
 	public function getEmailByVendor(int $id=null, string $email):int{
 		$con = $this->getConn();	
 
+		$id = preg_replace('/\D/', '', $id);
+
 		$and_id = null;
 		
 		if ($id!=null) 
@@ -55,7 +58,7 @@ class DataBase {
 				'".$VendorsSales->getValue()."',
 				'".$VendorsSales->getData()."',				
 				'".$VendorsSales->getIdVendor()."')";
-
+			
 			if (mysqli_query($con,$query)) {
 				$data[] = array(
 					'success' => '1'
@@ -134,11 +137,11 @@ class DataBase {
 		
 	}
 	
-	public function alterVendor( Vendors $Vendors ):array{
-		
+	public function alterVendor( Vendors $Vendors ):array{		
+
 		$con = $this->getConn();		
 
-		if ($this->getEmailByVendor($_POST['id'],$Vendors->getEmail())==0) {
+		if ($this->getEmailByVendor($Vendors->getid(),$Vendors->getEmail())==0) {
 
 			$DT = new DateTime();				
 
@@ -175,8 +178,6 @@ class DataBase {
 		
 		$query = "delete from vendors_sales where id=".$VendorsSales->getid()."";
 
-		echo $query;
-		
 		if (mysqli_query($con,$query)) {
 			$data[] = array(
 				'success' => '1'
@@ -233,12 +234,22 @@ class DataBase {
 		return $Vendors;		
 	}
 
-	public function getVendorsSales():array{
+	public function getVendorsSales(string $date = ""):array{
+
+		$and_date = "";
+
+		if ($date != null) {
+			$and_date  = "and b.date = '$date 00:00:00'";
+		}
 		
 		$con = $this->getConn();	
 		
-		$Vendors = array();		
-		$query = "select a.name,a.email,b.id,b.commission,b.value,b.date,b.created_date from vendors a inner join vendors_sales b on a.id = b.id_vendor";
+		$Vendors = array();	
+
+		$query = "select a.name,a.email,b.id,b.commission,b.value,b.date,b.created_date 
+					from vendors a 
+					inner join vendors_sales b on a.id = b.id_vendor where 1=1 $and_date";
+
 		$res = mysqli_query($con,$query);		
 		
 		while($row=mysqli_fetch_assoc($res)) 
@@ -301,5 +312,29 @@ class DataBase {
 			
 			return $vendors;		
 		}
-	}		
+	}
+
+
+	public function sendEmail( Email $Email ):array{
+
+		$email = $Email->getemail();
+		$date = $Email->getDate();
+		$subject = $Email->getSubject();
+		$total = $Email->getTotal();
+		$body = " Day: $date - Total Sales: $total ";
+		
+		if ($Email->send( $email, $subject, $body )) {
+			$data[] = array(
+				'success' => '1'
+			);
+		}
+		else {
+			$data[] = array(
+				'success' => '0'
+			);
+		}
+				
+		return $data;
+	}	
+	
 }

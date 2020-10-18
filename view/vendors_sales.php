@@ -28,6 +28,9 @@
 				<li class="nav-item">
 					<a class="nav-link disabled" href="#">Vendors Sales</a>
 				</li>		
+				<li class="nav-item">
+					<a class="nav-link" href="sales_report.php">Sales Report</a>
+				</li>						
 			</ul>
 		</div>
 	</nav>
@@ -36,7 +39,7 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Data Vendors Sales Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Vendors Sales Form</h4></th></tr>
 				<tr style="text-align:center;">
 					<th>Vendor</th>
 					<th>Value</th>
@@ -145,6 +148,8 @@
 				data:form1,
 				success:function(data)
 				{	
+					console.log(data);
+					
 					if (data === 'insert')
 					{
 						//alert("Data inserted!");						

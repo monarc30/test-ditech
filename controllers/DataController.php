@@ -2,17 +2,13 @@
 
 class DataController {   
 
-    public static function getDataGeneric( $param, $url_api, $type ) {
-        
-        $url = $url_api.$param;
+    public static function getDataGeneric( $param, $url_api, $type ) {        
 
-        echo $url;
-        
+        $url = $url_api.$param;
         $client = curl_init($url);
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);	
         $response = curl_exec($client);
         $result = json_decode($response, true);
-
         $output = "";
         
         if (count($result) > 0)
@@ -33,7 +29,7 @@ class DataController {
                     
                     $output .= '<option value='.$row['id'].'>'.$row['name'].'</option>';
 
-                } else {
+                } elseif ( $type === 'vendors_sales' ) {
                     
                     $output .= '
                     <tr style="text-align:center">
@@ -45,8 +41,30 @@ class DataController {
                         <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Delete</button></td>  
                     </tr>
                     ';
+                } elseif ( $type === 'vendors_sales_form' ) {
+
+                    $sales_total_date += $row['value'];
+                    $date = $row['date'];                   
+                    
                 }
-            }	
+            }
+
+            if ( $type === 'vendors_sales_form' ) {
+                $output .= '
+                <tr style="text-align:center">                    
+                    <td>'.$date.'</td>                        
+                    <td>'.number_format($sales_total_date, 2, '.', '').'</td>    
+                </tr>';
+
+                $output .= "
+                <tr style=\"text-align:center\">
+                    <td colspan=2>
+                        <input id=\"save\" class=\"btn btn-primary\" type=\"button\" onclick=\"SendEmail('$date','$sales_total_date')\" value=\"Send Report E-mail\"></input>
+                    </td>
+                </tr>
+                ";
+            }
+
         }
         else
         {

@@ -30,7 +30,7 @@ if (isset($_POST["action"]))
 		
 		$id = $_POST["id"];	
 		$param = "?action=vendor_one&id=".$id."";		
-		
+
 		echo saveController::getOne( $id, $param, $url_api );		
 		
 	}	

@@ -4,10 +4,8 @@ class Vendors {
 	
 	private $id;
 	private $name;
-	private $address;
-	private $cpf;
 	private $email;
-	private $birth;	
+	private $commission;
 	private $created_date;	
 	private $updated_date;	
 	
@@ -17,11 +15,11 @@ class Vendors {
 	}
 	
 	
-	public function setid($id):void {
-		$this->id = $id;
+	public function setid($id):void {		
+		$this->id = $id;		
 	}
 	
-	public function getid():int {
+	public function getid():int {		
 		return $this->id;
 	}
 	

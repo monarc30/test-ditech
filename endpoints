@@ -1,0 +1,31 @@
+API - TRAY
+
+buscar vendedor específico
+GET http://test-tray/api/getdataGeneric.php?action=vendor_one&id=1
+
+inserir vendedor
+POST http://test-tray/api/getdataGeneric.php?action=insert
+
+alterar vendedor
+POST http://test-tray/api/getdataGeneric.php?action=update
+
+deletar vendedor
+DELETE http://test-tray/api/getdataGeneric.php?action=delete&id=2
+
+inserir venda
+http://test-tray/api/getdataGeneric.php?action=insert_vendors_sales
+
+buscar venda
+http://test-tray/api/getdataGeneric.php?action=vendor_one_vendors_sales&id=4
+
+alterar venda
+http://test-tray/api/getdataGeneric.php?action=update_vendors_sales
+
+deletar vendar
+http://test-tray/api/getdataGeneric.php?action=delete_vendors&id=2
+
+buscar vendas pela data
+http://test-tray/api/getdataGeneric.php?action=get_vendor_by_date&date=2020-10-17 00:00:00
+
+enviar email
+http://test-tray/api/getdataGeneric.php?action=sendEMail

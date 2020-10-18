@@ -4,16 +4,19 @@ ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
+
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 
 require_once ( "../models/Vendors.php" );
 require_once ( "../models/VendorsSales.php" );
+require_once ( "../models/Email.php" );
 
 $data = new DataBase( $host, $user, $password, $dbname );
 
 $Vendors = new Vendors();
 $VendorsSales = new VendorsSales();
+$Email = new Email();
 
 if ($_GET['action'] === "get_all") {
 	$res = $data->getVendors();
@@ -33,7 +36,7 @@ if ($_GET['action'] === "insert") {
 }
 
 if ($_GET['action'] === "insert_vendors_sales") {	
-	
+
 	$commission = $VendorsSales->setcommission($_POST['commission']);
 	$value = $VendorsSales->setValue($_POST['value']);
 	$date = $VendorsSales->setData($_POST['date']);
@@ -55,13 +58,12 @@ if ($_GET['action'] === "vendor_one_vendors_sales") {
 	$res = $data->vendor_one_vendors( $VendorsSales );
 }
 
-if ($_GET['action'] === "update") {
+if ($_GET['action'] === "update") {	
 
 	$name = $Vendors->setName($_POST['name']);
 	$email = $Vendors->setEmail($_POST['email']);
 	$commission = $Vendors->setcommission($_POST['commission']);
 	$id = $Vendors->setid($_POST['id']);	
-	
 	$res = $data->altervendor( $Vendors );
 }
 
@@ -89,6 +91,22 @@ if ($_GET['action'] === "delete_vendors") {
 	$id_vendor_sales = $VendorsSales->setid($_GET["id"]);	
 	$res = $data->deleteVendorSales( $VendorsSales );
 	
+}
+
+if ($_GET['action'] === "get_vendor_by_date") {
+
+	$date = $_GET["date"];
+	$res = $data->getVendorsSales( $date );
+
+}
+
+if ($_GET['action'] === "sendEMail") {
+
+	$email = $Email->setEmail($_POST['email']);
+	$date = $Email->setDate($_POST['date']);
+	$total = $Email->setTotal($_POST['total']);	
+	$subject = $Email->setSubject("Daily Sales - Test Tray");	
+	$res = $data->sendEmail( $Email );
 }
 
 echo json_encode($res);

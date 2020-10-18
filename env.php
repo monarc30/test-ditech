@@ -11,3 +11,5 @@ $dbname = 'DB_TRAY';
 $user = 'root';
 $password = 'root';
 $port = '';
+
+$sales_form_email = "fernando.monarca@hotmail.com";
