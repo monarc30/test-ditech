@@ -15,6 +15,7 @@ utilizar este mesmo host no arquivo env.php
 alterar o email padrão para recebimento do relatório.
 
 
-
+cron job para enviar os emails de vendas
+59 23 * * * php -f /home/u844214382/cronjobs/nomedoarquivo.php
 
 

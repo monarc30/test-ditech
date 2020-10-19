@@ -52,8 +52,13 @@ class Email {
 		$headers .= "MIME-Version: 1.0\n";
 		$headers .= "Content-type: text/html; charset=iso-8859-1\n";
 
-        mail ($email,$subject,$body,$headers, "-r$email");
-
+		if (mail ($email,$subject,$body,$headers, "-r$email")) {
+			return true;
+		}				
+		else
+		{
+			return false;
+		}
     }
 
 }
