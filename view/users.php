@@ -43,6 +43,7 @@
 				<tr style="text-align:center;">
 					<th>Name</th>					
 					<th>Email</th>					
+					<th>Login</th>					
 					<th colspan=2>Action</th>
 				</tr>
 			</thead>
@@ -62,10 +63,10 @@
 		<input class="form-control" type="text" name="email" id="email" size=100 required>		
 
 		<label>Login:</label>
-		<input class="form-control" type="text" name="login" id="login" size=10 required>		
+		<input class="form-control" type="text" name="login" id="login" maxlength=10 size=10 required>		
 
 		<label>Password:</label>
-		<input class="form-control" type="password" name="password" id="password" size=10 required>		
+		<input class="form-control" type="password" name="password" id="password" maxlength=10 size=10 required>		
 		
 		<input type="hidden" name="id_user" id="id_user">
 		<input type="hidden" name="action" id="action" value="insert">
@@ -128,7 +129,6 @@
 				data:form1,
 				success:function(data)
 				{
-					
 					if (data === 'insert')
 					{
 						//alert("Data inserted!");
@@ -169,12 +169,12 @@
 				dataType:"json",				
 				success:function(data)
 				{
-					
 					$('#id_user').val(id);
 					$('#created_date').val(data.created_date);
 					$('#name').val(data.name);
 					$('#email').val(data.email);
-					$('#commission').val(data.commission);										
+					$('#login').val(data.login);
+					$('#password').val(data.password);					
 				},
 				error: function(result) {
                     console.log(result);					
@@ -199,7 +199,7 @@
 					data:{id:id,action:action},
 					success:function(data)
 					{
-						
+						console.log(data);
 						Reset();
 						getData('users', '?action=get_all');
 						

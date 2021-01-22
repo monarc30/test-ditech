@@ -1,5 +1,10 @@
 <?php
 
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
+
+
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 
@@ -25,8 +30,10 @@ if ($_GET['action'] === "insert") {
 	
 	$name = $Users->setName($_POST['name']);
 	$email = $Users->setEmail($_POST['email']);	
+	$login = $Users->setLogin($_POST['login']);	
+	$password = $Users->setPassword($_POST['password']);	
 
-	$res = $data->insertUsers( $Vendors );
+	$res = $data->insertUsers( $Users );
 }
 
 if ($_GET['action'] === "insert_rooms") {	
@@ -56,6 +63,8 @@ if ($_GET['action'] === "update") {
 
 	$name = $Users->setName($_POST['name']);
 	$email = $Users->setEmail($_POST['email']);	
+	$login = $Users->setLogin($_POST['login']);	
+	$password = $Users->setPassword($_POST['password']);	
 	$id = $Users->setid($_POST['id']);	
 	$res = $data->alteruser( $Users );
 }

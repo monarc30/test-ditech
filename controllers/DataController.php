@@ -16,20 +16,21 @@ class DataController {
             foreach($result as $row)
             {
                 
-                if ( $type === 'vendors' ) {
+                if ( $type === 'users' ) {
                     $output .= '
                     <tr style="text-align:center">
                         <td>'.$row['name'].'</td>                        
-                        <td>'.$row['email'].'</td>				
+                        <td>'.$row['email'].'</td>
+                        <td>'.$row['login'].'</td>                        
                         <td><button name="edit" class="btn btn-primary edit" type=button id="'.$row['id'].'">Edit</button></td>
                         <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Delete</button></td>  
                     </tr>
                     ';
-                } elseif ( $type === 'id_vendor' ) {
+                } elseif ( $type === 'id_user' ) {
                     
                     $output .= '<option value='.$row['id'].'>'.$row['name'].'</option>';
 
-                } elseif ( $type === 'vendors_sales' ) {
+                } elseif ( $type === 'rooms' ) {
                     
                     $output .= '
                     <tr style="text-align:center">

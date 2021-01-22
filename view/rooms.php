@@ -41,10 +41,7 @@
 			<thead>
 				<tr><th colspan=7 style="text-align:center;"><h4>Rooms Form</h4></th></tr>
 				<tr style="text-align:center;">
-					<th>Vendor</th>
-					<th>Value</th>
-					<th>Commission</th>
-					<th>Date</th>
+					<th>Description</th>
 					<th colspan=2>Action</th>
 				</tr>
 			</thead>
@@ -58,18 +55,17 @@
 		
 		<label>Created Date:</label>
 		<input class="form-control" disabled type="text" name="created_date" id="created_date">	
-		<label>Value:</label>
-		<input class="form-control" type="text" name="value" id="value" onBlur="calculates_commission(this.value)" size=10 required>	
-		<label>Commission:</label>
-		<input type="text" class="form-control" name="commission" id="commission" value="8.5" readonly required>		
-		<label>Date:</label>
-		<input class="form-control" type="date" name="date" id="date" required>	
+		<label>Description:</label>
+		<input type="text" class="form-control" name="description" id="description" value="" required>				
+
+		<!-----
 		<label>Vendor:</label>
 		<select id="id_vendor" name="id_vendor" required>
 			<option value="">-Select Vendor-</option>
 		</select>					
+		------->
 		
-		<input type="hidden" name="id_vendor_sales" id="id_vendor_sales">
+		<input type="hidden" name="id_vendor_sales" id="id_rooms">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
 		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
@@ -97,7 +93,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		getData('vendors_sales', '?action=get_all_sales');
+		getData('rooms', '?action=get_all_rooms');
 
 		getData('id_vendor', '?action=get_all');
 
@@ -115,16 +111,16 @@
 		function getData( type, param )
 		{
 			$.ajax({
-				url:"../api/getdataVendors.php",
+				url:"../api/getdataUsers.php",
 				data: { type: type, param: param },
 				success: function(data)
 				{
-					if (type=='vendors_sales') {
+					if (type=='rooms') {
 						$('tbody').html(data);
 					}
 					else{
 						
-						$('#id_vendor').append(data);
+						$('#id_room').append(data);
 					}
 
 				}
@@ -143,7 +139,7 @@
 			var form1 = $(this).serialize();
 			
 			$.ajax({
-				url: "../api/saveVendorsSales.php",
+				url: "../api/saveRooms.php",
 				method:"POST",
 				data:form1,
 				success:function(data)
@@ -159,7 +155,7 @@
 						//alert("Data updated!");											
 					}
 					Reset();
-					getData('vendors_sales', '?action=get_all_sales');
+					getData('rooms', '?action=get_all_rooms');
 				}
 			});				
 			
@@ -170,14 +166,14 @@
 
 			var id = $(this).attr('id');
 
-			var action = 'vendor_one_vendors_sales';
+			var action = 'user_one_rooms';
 
 			$('#action').val('update');
 
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../api/saveVendorsSales.php",
+				url:"../api/saveRooms.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
@@ -185,12 +181,9 @@
 				success:function(data)
 				{
 					
-					$('#id_vendor_sales').val(id);
+					$('#id_rooms').val(id);
 					$('#created_date').val(data.created_date);
-					$('#commission').val(data.commission);
-					$('#value').val(data.value);
-					$('#date').val(data.date);
-					$('#id_vendor').val(data.id_vendor);
+					$('#description').val(data.description);
 
 				},
 				error: function(result) {
@@ -211,13 +204,13 @@
 			{
 				
 				$.ajax({
-					url:"../api/saveVendorsSales.php",
+					url:"../api/saveRooms.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)
 					{
 						Reset();
-						getData('vendors_sales','?action=get_all_sales');
+						getData('rooms','?action=get_all_sales');
 						
 						//alert("Data deleted!");
 					}

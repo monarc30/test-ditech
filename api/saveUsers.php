@@ -4,7 +4,6 @@ ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
-
 require_once ( "../env.php" );
 
 require_once ( "../controllers/saveController.php" ); 
@@ -19,7 +18,7 @@ if (isset($_POST["action"]))
 			'login' => $_POST['login'],			
 			'password' => $_POST['password'],					
 		);
-
+		
 		$param = "?action=insert";
 
 		echo saveController::add( $form_data, $param, $url_api );		
@@ -27,11 +26,11 @@ if (isset($_POST["action"]))
 	}
 	
 	
-	if ($_POST["action"] === 'vendor_one')		
+	if ($_POST["action"] === 'user_one')		
 	{		
 		
 		$id = $_POST["id"];	
-		$param = "?action=vendor_one&id=".$id."";		
+		$param = "?action=user_one&id=".$id."";		
 
 		echo saveController::getOne( $id, $param, $url_api );		
 		
@@ -46,7 +45,7 @@ if (isset($_POST["action"]))
 			'email' => $_POST['email'],			
 			'login' => $_POST['login'],			
 			'password' => $_POST['password'],			
-			'id' => $_POST['id_vendor'],		
+			'id' => $_POST['id_user'],		
 		);
 
 		$param = "?action=update";				

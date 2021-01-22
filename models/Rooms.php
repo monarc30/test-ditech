@@ -1,15 +1,11 @@
 <?php
 
-class VendorsSales {
+class Rooms {
 	
 	private $id;
-	private $commission;
-	private $value;
-	private $date;
+	private $description;
 	private $created_date;	
     private $updated_date;	
-    private $id_vendor;	
-    
 
     public function __contruct() 
 	{
@@ -25,28 +21,8 @@ class VendorsSales {
 		return $this->id;
 	}
 	
-	public function setCommission($commission):void {
-		$this->commission = $commission;		
-	}
-	
-	public function getCommission():string {
-		return $this->commission;		
-	}	
-	
-	public function setValue($value):void {
-		$this->value = $value;		
-	}
-	
-	public function getValue():string {
-		return $this->value;		
-	}
-	
-	public function setData($date):void {
-		$this->date = $date;
-	}
-	
-	public function getData():string {
-		return $this->date;		
+	public function setDescription($description):void {
+		$this->description = $description;		
 	}
 	
 	public function setCreateddate($created_date):void {
@@ -63,14 +39,6 @@ class VendorsSales {
 	
 	public function getUpdateddate():DateTimeInterface {
 		return $this->updated_date;		
-    }    
-	
-	public function setIdvendor($id_vendor):void {
-		$this->id_vendor = $id_vendor;
-	}
-	
-	public function getIdvendor():int {
-		return $this->id_vendor;		
-	}
+    }    	
 	
 }

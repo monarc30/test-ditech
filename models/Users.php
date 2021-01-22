@@ -1,10 +1,12 @@
 <?php
 
-class Vendors {
+class Users {
 	
 	private $id;
 	private $name;
 	private $email;
+	private $login;
+	private $password;
 	private $created_date;	
 	private $updated_date;	
 	
@@ -36,6 +38,22 @@ class Vendors {
 	
 	public function getEmail():string {
 		return $this->email;		
+	}
+
+	public function setLogin($login):void {
+		$this->login = $login;
+	}
+	
+	public function getLogin():string {
+		return $this->login;		
+	}
+
+	public function setPassword($password):void {
+		$this->password = $password;
+	}
+	
+	public function getPassword():string {
+		return $this->password;		
 	}
 	
 	public function setCreateddate($created_date):void {

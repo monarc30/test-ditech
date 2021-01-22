@@ -6,7 +6,9 @@ if (isset($_POST["action"]))
 	{
 		$form_data = array(
 			'name' => $_POST['name'],
-			'email' => $_POST['email']
+			'email' => $_POST['email'],
+			'login' => $_POST['login'],
+			'password' => $_POST['password']
 		);
 
 		$url = "http://test-ditech/getUsers.php?action=insert";
