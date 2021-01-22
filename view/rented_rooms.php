@@ -13,7 +13,7 @@
 <div class="container">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">tray</a>
+		<a class="navbar-brand" href="#">Ditech</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -23,13 +23,13 @@
 					<a class="nav-link" href="..\index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="vendors.php">Vendors</a>
+					<a class="nav-link" href="users.php">Users</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="vendors_sales.php">Vendors Sales</a>
+					<a class="nav-link" href="rooms.php">Rooms</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#">Sales Report</a>
+					<a class="nav-link disabled" href="#">Rented Rooms</a>
 				</li>							
 			</ul>
 		</div>
@@ -38,7 +38,7 @@
     <div class="table-responsive">
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Sales Report Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Rented Rooms Form</h4></th></tr>
 				<tr style="text-align:center;">
 					<th>Select the Date bellow</th>										
 				</tr>

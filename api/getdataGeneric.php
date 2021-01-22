@@ -3,34 +3,33 @@
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 
-require_once ( "../models/Vendors.php" );
-require_once ( "../models/VendorsSales.php" );
+require_once ( "../models/Users.php" );
+require_once ( "../models/Rooms.php" );
 require_once ( "../models/Email.php" );
 
 $data = new DataBase( $host, $user, $password, $dbname );
 
-$Vendors = new Vendors();
-$VendorsSales = new VendorsSales();
+$Users = new Users();
+$Rooms = new Rooms();
 $Email = new Email();
 
 if ($_GET['action'] === "get_all") {
-	$res = $data->getVendors();
+	$res = $data->getUsers();
 }
 
-if ($_GET['action'] === "get_all_sales") {
-	$res = $data->getVendorsSales();
+if ($_GET['action'] === "get_all_rooms") {
+	$res = $data->getRooms();
 }
 
 if ($_GET['action'] === "insert") {
 	
-	$name = $Vendors->setName($_POST['name']);
-	$email = $Vendors->setEmail($_POST['email']);
-	$commission = $Vendors->setcommission($_POST['commission']);	
+	$name = $Users->setName($_POST['name']);
+	$email = $Users->setEmail($_POST['email']);	
 
-	$res = $data->insertVendors( $Vendors );
+	$res = $data->insertUsers( $Vendors );
 }
 
-if ($_GET['action'] === "insert_vendors_sales") {	
+if ($_GET['action'] === "insert_rooms") {	
 
 	$commission = $VendorsSales->setcommission($_POST['commission']);
 	$value = $VendorsSales->setValue($_POST['value']);
@@ -40,29 +39,28 @@ if ($_GET['action'] === "insert_vendors_sales") {
 	$res = $data->insertVendorSales( $VendorsSales );
 }
 
-if ($_GET['action'] === "vendor_one") {	
+if ($_GET['action'] === "user_one") {	
 	
-	$id_vendor = $Vendors->setid($_GET["id"]);	
-	$res = $data->vendor_one( $Vendors );
+	$id_user = $Users->setid($_GET["id"]);	
+	$res = $data->user_one( $Users );
 
 }
 
-if ($_GET['action'] === "vendor_one_vendors_sales") {
+if ($_GET['action'] === "user_one_rooms") {
 
-	$id_vendor_sale = $VendorsSales->setid($_GET["id"]);	
-	$res = $data->vendor_one_vendors( $VendorsSales );
+	$id_room = $Rooms->setid($_GET["id"]);	
+	$res = $data->user_one_rooms( $Rooms );
 }
 
 if ($_GET['action'] === "update") {	
 
-	$name = $Vendors->setName($_POST['name']);
-	$email = $Vendors->setEmail($_POST['email']);
-	$commission = $Vendors->setcommission($_POST['commission']);
-	$id = $Vendors->setid($_POST['id']);	
-	$res = $data->altervendor( $Vendors );
+	$name = $Users->setName($_POST['name']);
+	$email = $Users->setEmail($_POST['email']);	
+	$id = $Users->setid($_POST['id']);	
+	$res = $data->alteruser( $Users );
 }
 
-if ($_GET['action'] === "update_vendors_sales") {
+if ($_GET['action'] === "update_rooms") {
 
 	$commission = $VendorsSales->setCommission($_POST['commission']);
 	$value = $VendorsSales->setValue($_POST['value']);
@@ -75,23 +73,23 @@ if ($_GET['action'] === "update_vendors_sales") {
 
 if ($_GET['action'] === "delete") {
 	
-	$id_vendor = $Vendors->setid($_GET["id"]);
-	$id_vendor_sales = $VendorsSales->setid($_GET["id"]);
+	$id_user = $Users->setid($_GET["id"]);
+	$id_rooms = $Rooms->setid($_GET["id"]);
 
-	$res = $data->deleteVendor( $Vendors , $VendorsSales );
+	$res = $data->deleteUser( $Users , $Rooms );
 }
 
-if ($_GET['action'] === "delete_vendors") {
+if ($_GET['action'] === "delete_users") {
 
-	$id_vendor_sales = $VendorsSales->setid($_GET["id"]);	
-	$res = $data->deleteVendorSales( $VendorsSales );
+	$id_rooms = $Rooms->setid($_GET["id"]);	
+	$res = $data->deleteRooms( $Rooms );
 	
 }
 
-if ($_GET['action'] === "get_vendor_by_date") {
+if ($_GET['action'] === "get_user_by_date") {
 
 	$date = $_GET["date"];
-	$res = $data->getVendorsSales( $date );
+	$res = $data->getRooms( $date );
 
 }
 

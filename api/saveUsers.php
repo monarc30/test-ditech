@@ -1,9 +1,9 @@
 <?php
 
-/*ini_set('display_errors',1);
+ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
-*/
+
 
 require_once ( "../env.php" );
 
@@ -15,8 +15,9 @@ if (isset($_POST["action"]))
 	{
 		$form_data = array(
 			'name' => $_POST['name'],
-			'email' => $_POST['email'],
-			'commission' => $_POST['commission'],			
+			'email' => $_POST['email'],	
+			'login' => $_POST['login'],			
+			'password' => $_POST['password'],					
 		);
 
 		$param = "?action=insert";
@@ -42,8 +43,9 @@ if (isset($_POST["action"]))
 		
 		$form_data = array(
 			'name' => $_POST['name'],
-			'email' => $_POST['email'],
-			'commission' => $_POST['commission'],	
+			'email' => $_POST['email'],			
+			'login' => $_POST['login'],			
+			'password' => $_POST['password'],			
 			'id' => $_POST['id_vendor'],		
 		);
 

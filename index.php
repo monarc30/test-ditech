@@ -13,7 +13,7 @@
 
     <div class="header">
 
-        <h1>tray</h1>
+        <h1>Ditech</h1>
 
     </div>
 
@@ -21,14 +21,14 @@
 
     <div class="content">
     
-        <a href="view\vendors.php" class="btn btn-primary">View Vendors</a>
-        <a href="view\vendors_sales.php" class="btn btn-primary">View Vendors Sales</a>	
-        <a href="view\sales_report.php" class="btn btn-primary">View Report Form</a>	
+        <a href="view\users.php" class="btn btn-primary">View Users</a>
+        <a href="view\rooms.php" class="btn btn-primary">View Rooms</a>	
+        <a href="view\rented_rooms.php" class="btn btn-primary">View Rented Rooms</a>	
 
     </div>
 
     <div class="footer">
-        @copyright 2020 - tray
+        @copyright 2021 - Ditech
     </div>
 
 </div>

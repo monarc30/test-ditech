@@ -13,7 +13,7 @@
 <div class="container">
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">tray</a>
+		<a class="navbar-brand" href="#">Ditech</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -23,13 +23,13 @@
 					<a class="nav-link" href="..\index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link disabled" href="#">Vendors</a>
+					<a class="nav-link disabled" href="#">Users</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="vendors_sales.php">Vendors Sales</a>
+					<a class="nav-link" href="rooms.php">Rooms</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="sales_report.php">Sales Report</a>
+					<a class="nav-link" href="rented_rooms.php">Rented Rooms</a>
 				</li>							
 			</ul>
 		</div>
@@ -39,7 +39,7 @@
 
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Vendors Form</h4></th></tr>
+				<tr><th colspan=7 style="text-align:center;"><h4>Users Form</h4></th></tr>
 				<tr style="text-align:center;">
 					<th>Name</th>					
 					<th>Email</th>					
@@ -59,11 +59,15 @@
 		<label>Name:</label>
 		<input class="form-control" type="text" name="name" id="name" size=100 required>	
 		<label>Email:</label>
-		<input class="form-control" type="text" name="email" id="email" size=100 required>	
-		<label>Commission:</label>
-		<input class="form-control" type="text" name="commission" id="commission" size=3 value="8.5" readonly required>			
+		<input class="form-control" type="text" name="email" id="email" size=100 required>		
+
+		<label>Login:</label>
+		<input class="form-control" type="text" name="login" id="login" size=10 required>		
+
+		<label>Password:</label>
+		<input class="form-control" type="password" name="password" id="password" size=10 required>		
 		
-		<input type="hidden" name="id_vendor" id="id_vendor">
+		<input type="hidden" name="id_user" id="id_user">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
 		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
@@ -81,7 +85,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		
-		getData('vendors', '?action=get_all');
+		getData('users', '?action=get_all');
 
 		function Reset() 
 		{
@@ -97,7 +101,7 @@
 		function getData(type, param)
 		{
 			$.ajax({
-				url:"../api/getdataVendors.php",
+				url:"../api/getdataUsers.php",
 				data: { type:type, param:param },
 				success: function(data)
 				{
@@ -119,7 +123,7 @@
 			var form1 = $(this).serialize();
 			
 			$.ajax({
-				url: "../api/saveVendors.php",
+				url: "../api/saveUsers.php",
 				method:"POST",
 				data:form1,
 				success:function(data)
@@ -129,7 +133,7 @@
 					{
 						//alert("Data inserted!");
 						Reset();
-						getData('vendors', '?action=get_all');
+						getData('Users', '?action=get_all');
 					}
 					else if (data === 'error2')
 					{
@@ -139,7 +143,7 @@
 					{
 						//alert("Data updated!");
 						Reset();
-						getData('vendors', '?action=get_all');
+						getData('users', '?action=get_all');
 					
 					}
 				}
@@ -152,21 +156,21 @@
 
 			var id = $(this).attr('id');			
 
-			var action = 'vendor_one';
+			var action = 'user_one';
 			
 			$('#action').val('update');
 
 			$('#save').val('Update');
 			
 			$.ajax({
-				url:"../api/saveVendors.php",
+				url:"../api/saveUsers.php",
 				method:"POST",
 				data:{id:id,action:action},
 				dataType:"json",				
 				success:function(data)
 				{
 					
-					$('#id_vendor').val(id);
+					$('#id_user').val(id);
 					$('#created_date').val(data.created_date);
 					$('#name').val(data.name);
 					$('#email').val(data.email);
@@ -190,14 +194,14 @@
 			{
 				
 				$.ajax({
-					url:"../api/saveVendors.php",
+					url:"../api/saveUsers.php",
 					method:"POST",
 					data:{id:id,action:action},
 					success:function(data)
 					{
 						
 						Reset();
-						getData('vendors', '?action=get_all');
+						getData('users', '?action=get_all');
 						
 						//alert("Data deleted!");
 					}

@@ -5,7 +5,6 @@ class Vendors {
 	private $id;
 	private $name;
 	private $email;
-	private $commission;
 	private $created_date;	
 	private $updated_date;	
 	
@@ -37,14 +36,6 @@ class Vendors {
 	
 	public function getEmail():string {
 		return $this->email;		
-	}
-	
-	public function setCommission($commission):void {
-		$this->commission = $commission;
-	}
-	
-	public function getCommission():string {
-		return $this->commission;		
 	}
 	
 	public function setCreateddate($created_date):void {
