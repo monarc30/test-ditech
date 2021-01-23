@@ -338,7 +338,15 @@ class DataBase {
 		
 		$and_date  = " and end_reserved >= '$date' ";			
 
-		$query = "select id, id_user, id_room, start_reserved, end_reserved from rented_rooms where 1=1 $and_date $and_user ";
+		$query = "select a.id, b.name , c.description , a.start_reserved, a.end_reserved 
+		
+		FROM rented_rooms a 
+
+		INNER JOIN users b on a.id_user = b.id
+
+		INNER JOIN rooms c on a.id_room = c.id		
+		
+		WHERE 1=1 $and_date $and_user ";
 
 		$res = mysqli_query($con,$query);		
 		
@@ -426,5 +434,28 @@ class DataBase {
 				
 		return $data;
 	}	
+
+	public function getUser( Users $Users ):int {
+
+		$con = $this->getConn();
+
+		$query = "select * from users where login = '".$Users->getLogin()."' and password = '".$Users->getPassword()."'";
+		
+		$res = mysqli_query($con,$query);
+
+		$rows = mysqli_num_rows($res);
+
+		if ($rows>0) {
+			
+			$row = mysqli_fetch_assoc($res);
+			$id_user = $row["id"];
+
+			return $id_user;
+		}
+		else{
+			return $rows;
+		}
+
+	}
 	
 }

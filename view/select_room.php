@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +57,7 @@
 
 	<form name="form1" id="form1" method="post">
 		
-        <input type="hidden" name="id_user" id="id_user" value="1">
+        <input type="hidden" name="id_user" id="id_user" value="<?php echo $_SESSION["id_user"]; ?>">
         <input type="hidden" name="action" id="action" value="select_room">
 
         <strong>Room:</strong> <select class="form-control" id="id_room" name="id_room" required>
@@ -76,9 +79,11 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-        getData('id_room', '?action=get_all_rooms_free');
+		var id_user = $("#id_user").val();
 
-        getData('rented_rooms_user', '?action=get_user_by_date&id=1');
+		getData('id_room', '?action=get_all_rooms_free');
+
+        getData('rented_rooms_user', '?action=get_user_by_date&id='+id_user);
 		
 		function getData( type, param )
 		{
@@ -101,9 +106,10 @@
 		}
 
 		$('#form1').on('submit', function(event){
+
 			event.preventDefault();
 
-			var form1 = $(this).serialize();
+			var form1 = $(this).serialize();			
 
 			$.ajax({
 				url: "../api/saveRooms.php",
@@ -115,7 +121,7 @@
 					{
 						alert("Room selected!");	
 
-                        getData('rented_rooms_user', '?action=get_user_by_date&id=1');
+                        getData('rented_rooms_user', '?action=get_user_by_date&id='+id_user);
 					}															
                     else if (data === 'error2') {
                         alert("Unavailable Room!");	
@@ -144,7 +150,7 @@
 					{
 						alert("Reservation Canceled!");
 
-                        getData('rented_rooms_user', '?action=get_user_by_date&id=1');
+                        getData('rented_rooms_user', '?action=get_user_by_date&id='+id_user);
 					}
 				});
 				

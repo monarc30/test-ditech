@@ -1,3 +1,44 @@
+<?php
+
+session_start();
+
+require_once ( "../env.php" );
+require_once ( "../dao/DataBase.php" ) ;
+require_once ( "../models/Users.php" );
+
+$Users = new Users();
+
+$data = new DataBase( $host, $user, $password, $dbname );
+
+if ($_POST) {
+
+	if ($_POST['login']=="admin" and $_POST['password']=="123456") {
+		
+		header('Location: ../index.php');
+		exit;
+	}
+	
+	else{ 
+
+		$login = $Users->setLogin($_POST['login']);	
+		$password = $Users->setPassword($_POST['password']);	
+
+		$res = $data->getUser( $Users );
+
+		if ($res > 0) {
+			$_SESSION["id_user"]=$res;
+			header('Location: select_room.php');
+			exit;
+		}else{
+			header('Location: login.php?error=1');
+			exit;
+		}
+
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,14 +73,18 @@
             <div class="col-4">
                 <form name="form1" id="form1" method="post">	
 
+					<?php
+
+					if (isset ($_GET["error"])) { ?>
+						<div class="col-12" style="color:red;font-weight:bold;text-align:center;">Invalid login</div>
+					<?php } ?>
+
                     <label>Login:</label>
                     <input class="form-control" type="text" name="login" id="login" maxlength=10 size=10 required>		
 
                     <label>Password:</label>
-                    <input class="form-control" type="password" name="password" id="password" maxlength=10 size=10 required>		
+                    <input class="form-control" type="password" name="password" id="password" maxlength=10 size=10 required>			                    
                     
-                    <input type="hidden" name="id_user" id="id_user">
-                    <input type="hidden" name="action" id="action" value="login">
                     <hr>
                     <p style="text-align:center"><input id="save" class="btn btn-primary" type="submit" value="Login"></input></p>
                 </form>
@@ -56,76 +101,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		$('#form1').on('submit', function(event){
-			
-            event.preventDefault();			
-			
-			var form1 = $(this).serialize();
-			
-			$.ajax({
-				url: "../api/saveUsers.php",
-				method:"POST",
-				data:form1,
-				success:function(data)
-				{
-					/*
-                    if (data === 'insert')
-					{
-						alert("Data inserted!");
-						Reset();
-						getData('users', '?action=get_all');
-					}
-					else if (data === 'error2')
-					{
-						alert("This email already exists in the database!");
-					}						
-					else if (data === 'update') 
-					{
-						alert("Data updated!");
-						Reset();
-						getData('users', '?action=get_all');
-					
-					}
-                    */
-				}
-			});				
-			
-		});
-		
-		
-		$(document).on('click', '.edit', function(){
-
-			var id = $(this).attr('id');			
-
-			var action = 'user_one';
-			
-			$('#action').val('update');
-
-			$('#save').val('Update');
-			
-			$.ajax({
-				url:"../api/saveUsers.php",
-				method:"POST",
-				data:{id:id,action:action},
-				dataType:"json",				
-				success:function(data)
-				{
-					$('#id_user').val(id);
-					$('#created_date').val(data.created_date);
-					$('#name').val(data.name);
-					$('#email').val(data.email);
-					$('#login').val(data.login);
-					$('#password').val(data.password);										
-				},
-				error: function(result) {
-                    console.log(result);					
-                }
-			});
-		});
-	});
-</script>
 </body>
 </html>

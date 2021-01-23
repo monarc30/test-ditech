@@ -60,8 +60,8 @@ class DataController {
                 elseif ( $type === 'rented_rooms_user' ) {
                     $output .= '
                     <tr style="text-align:center">                    
-                        <td>'.$row['id_user'].'</td>
-                        <td>'.$row['id_room'].'</td>
+                        <td>'.$row['name'].'</td>
+                        <td>'.$row['description'].'</td>
                         <td>'.$row['start_reserved'].'</td>
                         <td>'.$row['end_reserved'].'</td>
                         <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Cancelar</button></td>  
