@@ -4,12 +4,17 @@ class DataController {
 
     public static function getDataGeneric( $param, $url_api, $type ) {        
 
-        $url = $url_api.$param;
+        $url = $url_api.$param;        
+        
         $client = curl_init($url);
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);	
         $response = curl_exec($client);
+
+        echo $response;
+
         $result = json_decode($response, true);
-        $output = "";
+
+        $output = "";        
         
         if (count($result) > 0)
         {
@@ -47,20 +52,14 @@ class DataController {
                 }
             }
 
-            if ( $type === 'vendors_sales_form' ) {
+            if ( $type === 'rented_rooms' ) {
                 $output .= '
                 <tr style="text-align:center">                    
-                    <td>'.$date.'</td>                        
-                    <td>'.number_format($sales_total_date, 2, '.', '').'</td>    
-                </tr>';
-
-                $output .= "
-                <tr style=\"text-align:center\">
-                    <td colspan=2>
-                        <input id=\"save\" class=\"btn btn-primary\" type=\"button\" onclick=\"SendEmail('$date','$sales_total_date')\" value=\"Send Report E-mail\"></input>
-                    </td>
-                </tr>
-                ";
+                    <td>'.$row['id_user'].'</td>
+                    <td>'.$row['id_room'].'</td>
+                    <td>'.$row['start_reserved'].'</td>
+                    <td>'.$row['end_reserved'].'</td>
+                </tr>';                
             }
 
         }

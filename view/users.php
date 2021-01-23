@@ -202,7 +202,7 @@
 						Reset();
 						getData('users', '?action=get_all');
 						
-						//alert("Data deleted!");
+						alert("Data deleted!");
 					}
 				});
 				

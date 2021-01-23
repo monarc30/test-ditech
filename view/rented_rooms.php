@@ -38,37 +38,12 @@
     <div class="table-responsive">
 		<table class="table">
 			<thead>
-				<tr><th colspan=7 style="text-align:center;"><h4>Rented Rooms Form</h4></th></tr>
-				<tr style="text-align:center;">
-					<th>Select the Date bellow</th>										
-				</tr>
-			</thead>
-			<tbody>		
-			</tbody>
-		</table>
-
-    </div>
-    
-
-    <div class="row">
-
-        <div class="col col-lg-12">
-
-            <form name="form1" id="form1" method="post">                
-                <input class="form-control" type="date" name="date" id="date" onchange="getData('vendors_sales_form', '?action=get_vendor_by_date&date='+this.value);" required>
-            </form>
-        
-        </div>
-    
-    </div>
-    
-    <div class="table-responsive">
-		<table class="table">
-			<thead>
-                <tr style="text-align:center;"><th colspan=7><h4>Result</h4></th></tr>				
+                <tr style="text-align:center;"><th colspan=7><h4>Rented Rooms</h4></th></tr>				
                 <tr style="text-align:center;">
-                    <td><strong>Date</strong></td>
-                    <td><strong>Total</strong></td>
+                    <td><strong>User</strong></td>
+                    <td><strong>Room</strong></td>
+                    <td><strong>Start</strong></td>
+                    <td><strong>End</strong></td>
                 </tr>
 			</thead>
 			<tbody id="result">	                
@@ -82,35 +57,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
-
-    function SendEmail( date,total ){
-
-        var action = "sendEmail";
-
-        $.ajax({
-            type: "POST",
-            url:"../api/sendEmail.php",
-            data: { date: date, total: total, action:action },
-        }).done(function(data){ 
-            
-            if (data=="sent") {
-                alert("Email sent!");
-            }
-            else{
-                alert("Error sending the email!");
-            }
-            
-        }).fail(function(data){            
-            alert("Error sending the email!");
-        });
-
-    }
+<script type="text/javascript"> 
 
     function getData( type, param )
     {
         $.ajax({
-            url:"../api/getdataVendors.php",
+
+            url:"../api/getdataUsers.php",
             data: { type: type, param: param },
             success: function(data)
             {					
@@ -120,7 +73,7 @@
     }	
         
 	$(document).ready(function(){		
-		//getData('vendors_sales_form', '?action=get_vendor_by_date');					
+		getData('rented_rooms', '?action=get_user_by_date');					
 	});
 </script>
 </body>

@@ -258,21 +258,21 @@ class DataBase {
 		return $Rooms;		
 	}
 
-	public function getRentedRooms(string $date = ""):array{
+	public function getRentedRooms():array{
 
-		$and_date = "";
-
-		if ($date != null) {
-			$and_date  = "and b.date = '$date 00:00:00'";
-		}
-		
 		$con = $this->getConn();	
 		
 		$Users = array();	
 
-		$query = "select a.name,a.email,b.id,b.description,b.value,b.date,b.created_date 
-					from users a 
-					inner join rooms b on a.id = b.id_vendor where 1=1 $and_date";
+		$date = date("Y-m-d H:i:s");
+		
+		$start_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($date)));
+
+		$end_date = date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($date)));
+
+		$and_date  = "and created_date between '$start_date' and '$end_date'";			
+
+		$query = "select id_user, id_room, start_reserved, end_reserved from rented_rooms where 1=1 $and_date";
 
 		$res = mysqli_query($con,$query);		
 		

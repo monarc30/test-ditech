@@ -88,18 +88,12 @@ if ($_GET['action'] === "delete_users") {
 
 if ($_GET['action'] === "get_user_by_date") {
 
-	$date = $_GET["date"];
-	$res = $data->getRooms( $date );
+	$date = "";
+	if (isset( $_GET["date"] )) {
+		$date = $_GET["date"];
+	}
+	$res = $data->getRentedRooms( $date );
 
-}
-
-if ($_GET['action'] === "sendEMail") {
-
-	$email = $Email->setEmail($_POST['email']);
-	$date = $Email->setDate($_POST['date']);
-	$total = $Email->setTotal($_POST['total']);	
-	$subject = $Email->setSubject("Daily Sales - Test Tray");	
-	$res = $data->sendEmail( $Email );
 }
 
 echo json_encode($res);
