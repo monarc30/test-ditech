@@ -2,7 +2,7 @@
 
 require_once ( "../models/Users.php" );
 require_once ( "../models/Rooms.php" );
-require_once ( "../models/Email.php" );
+require_once ( "../models/RentedRooms.php" );
 
 class DataBase {
 	
@@ -99,7 +99,33 @@ class DataBase {
 		
 		
 		return $data;
-	}	
+	}
+	
+	
+	public function insertRentedRooms( RentedRooms $RentedRooms ):array{
+		
+		$con = $this->getConn();			
+
+		$query = "insert into rented_rooms (id_user,id_room,start_reserved,end_reserved) values (
+			'".$RentedRooms->getidUser()."',
+			'".$RentedRooms->getidRoom()."',
+			'".$RentedRooms->getstartReserved()."',
+			'".$RentedRooms->getendReserved()."')";
+
+		if (mysqli_query($con,$query)) {
+			$data[] = array(
+				'success' => '1'
+			);
+		}
+		else {
+			$data[] = array(
+				'success' => '0'
+			);
+		}
+		
+		return $data;
+	}
+
 
 	public function alterRooms( Rooms $Rooms ):array{
 		
@@ -201,29 +227,23 @@ class DataBase {
 	}
 	
 	
-	public function deleteRentedRooms( Users $Users, RentedRooms $RentedRooms ):array{
+	public function deleteRentedRooms( RentedRooms $RentedRooms ):array{
 		
 		$con = $this->getConn();			
 
-		$query_user = "delete from rented_rooms where id_user=".$RentedRooms->getid();		
-		
-		if (mysqli_query($con,$query_user)) {
+		$query = "delete from rented_rooms where id=".$RentedRooms->getid();				
 
-			$query = "delete from users where id=".$Users->getid()."";
-
-			if (mysqli_query($con,$query)) {
-				$data[] = array(
-					'success' => '1'
-				);
-			}
-			else {
-				$data[] = array(
-					'success' => '0'
-				);
-			}
-			return $data;
-
+		if (mysqli_query($con,$query)) {
+			$data[] = array(
+				'success' => '1'
+			);
 		}
+		else {
+			$data[] = array(
+				'success' => '0'
+			);
+		}
+		return $data;		
 	}
 	
 	public function getUsers():array{
@@ -258,30 +278,62 @@ class DataBase {
 		return $Rooms;		
 	}
 
-	public function getRentedRooms():array{
+	public function getFreeRooms():array{
 
 		$con = $this->getConn();	
 		
-		$Users = array();	
+		$Rooms = array();	
 
-		$date = date("Y-m-d H:i:s");
-		
-		$start_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($date)));
+		#$date = date("Y-m-d H:i:s");
 
-		$end_date = date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($date)));
+		#$last_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($date)));
 
-		$and_date  = "and created_date between '$start_date' and '$end_date'";			
+		//$query = "select id,description from rooms where id not in (select id_room from rented_rooms where end_reserved <= '$date')";
 
-		$query = "select id_user, id_room, start_reserved, end_reserved from rented_rooms where 1=1 $and_date";
+		$query = "select id,description from rooms";
 
 		$res = mysqli_query($con,$query);		
 		
 		while($row=mysqli_fetch_assoc($res)) 
 		{
-			$Users[] = $row;
+			$Rooms[] = $row;
 		}		
 		
-		return $Users;		
+		return $Rooms;		
+	}
+
+	public function getRentedRooms( Users $Users ):array{
+
+		$con = $this->getConn();	
+		
+		$Rooms = array();	
+
+		$and_user = "";
+
+		$user = $Users->getid();
+
+		if ($user != null) {
+			$and_user = " and id_user = '$user' ";
+		}
+
+		$date = date("Y-m-d H:i:s");
+		
+		//$start_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($date)));
+
+		//$end_date = date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($date)));
+
+		$and_date  = " and end_reserved >= '$date' ";			
+
+		$query = "select id, id_user, id_room, start_reserved, end_reserved from rented_rooms where 1=1 $and_date $and_user ";
+
+		$res = mysqli_query($con,$query);		
+		
+		while($row=mysqli_fetch_assoc($res)) 
+		{
+			$Rooms[] = $row;
+		}		
+		
+		return $Rooms;		
 	}
 
 	public function user_one_rooms( Rooms $Rooms ):array {

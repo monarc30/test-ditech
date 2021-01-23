@@ -44,7 +44,7 @@ class RentedRooms {
 		$this->start_reserved = $start_reserved;
 	}
 	
-	public function getstartReserved():int {
+	public function getstartReserved():string {
 		return $this->start_reserved;		
 	}
 

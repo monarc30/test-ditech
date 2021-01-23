@@ -22,6 +22,29 @@ if (isset($_POST["action"]))
 		echo saveController::add( $form_data, $param, $url_api );
 		
 	}
+
+	if($_POST["action"] === 'select_room')
+	{
+		
+		$date = $_POST['date'];
+		
+		$start_date = $date;
+
+		$end_date = date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($date)));
+		
+		$form_data = array(
+			
+			'id_user' => $_POST['id_user'],			
+			'id_room' => $_POST['id_room'],			
+			'start_reserved' => $start_date,			
+			'end_reserved' => $end_date,			
+		);
+
+		$param = "?action=insert_rented_rooms";
+		
+		echo saveController::add( $form_data, $param, $url_api );
+		
+	}
 	
 	
 	if ($_POST["action"] === 'user_one_rooms')		
@@ -53,6 +76,20 @@ if (isset($_POST["action"]))
 	{
 		$id = $_POST["id"];	
 		$param = "?action=delete_users&id=".$id."";		
+
+		echo saveController::delete( $id, $param, $url_api );
+
+		$client = curl_init($url);
+		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($client);		
+		echo $response;	
+		
+	}		
+
+	if ($_POST["action"] === 'delete_room')		
+	{
+		$id = $_POST["id"];	
+		$param = "?action=delete_room&id=".$id."";				
 
 		echo saveController::delete( $id, $param, $url_api );
 

@@ -4,22 +4,18 @@ class DataController {
 
     public static function getDataGeneric( $param, $url_api, $type ) {        
 
-        $url = $url_api.$param;        
-        
+        $url = $url_api.$param;    
+
         $client = curl_init($url);
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);	
-        $response = curl_exec($client);
-
-        echo $response;
-
-        $result = json_decode($response, true);
-
-        $output = "";        
+        $response = curl_exec($client);        
+        $result = json_decode($response, true);                       
+        $output = "";                
         
         if (count($result) > 0)
         {
             foreach($result as $row)
-            {
+            {                
                 
                 if ( $type === 'users' ) {
                     $output .= '
@@ -31,9 +27,9 @@ class DataController {
                         <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Delete</button></td>  
                     </tr>
                     ';
-                } elseif ( $type === 'id_user' ) {
+                } elseif ( $type === 'id_room' ) {
                     
-                    $output .= '<option value='.$row['id'].'>'.$row['name'].'</option>';
+                    $output .= '<option value='.$row['id'].'>'.$row['description'].'</option>';
 
                 } elseif ( $type === 'rooms' ) {
                     
@@ -50,18 +46,28 @@ class DataController {
                     $date = $row['date'];                   
                     
                 }
-            }
 
-            if ( $type === 'rented_rooms' ) {
-                $output .= '
-                <tr style="text-align:center">                    
-                    <td>'.$row['id_user'].'</td>
-                    <td>'.$row['id_room'].'</td>
-                    <td>'.$row['start_reserved'].'</td>
-                    <td>'.$row['end_reserved'].'</td>
-                </tr>';                
+                elseif ( $type === 'rented_rooms' ) {
+                    $output .= '
+                    <tr style="text-align:center">                    
+                        <td>'.$row['id_user'].'</td>
+                        <td>'.$row['id_room'].'</td>
+                        <td>'.$row['start_reserved'].'</td>
+                        <td>'.$row['end_reserved'].'</td>                        
+                    </tr>';                
+                }
+                
+                elseif ( $type === 'rented_rooms_user' ) {
+                    $output .= '
+                    <tr style="text-align:center">                    
+                        <td>'.$row['id_user'].'</td>
+                        <td>'.$row['id_room'].'</td>
+                        <td>'.$row['start_reserved'].'</td>
+                        <td>'.$row['end_reserved'].'</td>
+                        <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Cancelar</button></td>  
+                    </tr>';                
+                }
             }
-
         }
         else
         {

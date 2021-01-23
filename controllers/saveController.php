@@ -76,9 +76,12 @@ class saveController {
 	public static function delete( int $id, string $param, string $url_api ):string {
 
 		$url = $url_api.$param;		
+		
+		echo $url;
+
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_RETURNTRANSFER, true);
-		$response = curl_exec($client);				
+		$response = curl_exec($client);						
 		return $response;			
 	}
 

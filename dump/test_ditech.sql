@@ -34,6 +34,7 @@ CREATE TABLE `rented_rooms` (
   `end_reserved` DATETIME,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),  
   `updated_date` DATETIME,
+  `status` char(1),
   
   constraint pk_rented_rooms primary key(`id`),
   constraint fk_users FOREIGN KEY (`id_user`) REFERENCES users (`id`),
