@@ -66,13 +66,9 @@ if ($_GET['action'] === "update") {
 
 if ($_GET['action'] === "update_rooms") {
 
-	$commission = $VendorsSales->setCommission($_POST['commission']);
-	$value = $VendorsSales->setValue($_POST['value']);
-	$date = $VendorsSales->setData($_POST['date']);
-	$id_vendor = $VendorsSales->setIdvendor($_POST['id_vendor']);
-	$id = $VendorsSales->setid($_POST['id']);
-
-	$res = $data->alterVendorSales( $VendorsSales );
+	$description = $Rooms->setDescription($_POST['description']);
+	$id = $Rooms->setId($_POST['id']);
+	$res = $data->alterRooms( $Rooms );
 }
 
 if ($_GET['action'] === "delete") {

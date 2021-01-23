@@ -80,16 +80,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<script>
-	function calculates_commission(value){
-
-		var commission = 8.5;
-
-		$("#commission").val(value*commission/100);
-
-	}
-</script>
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -120,7 +110,7 @@
 					}
 					else{
 						
-						$('#id_room').append(data);
+						$('#id_rooms').append(data);
 					}
 
 				}
@@ -137,13 +127,14 @@
 			event.preventDefault();
 
 			var form1 = $(this).serialize();
-			
+
 			$.ajax({
 				url: "../api/saveRooms.php",
 				method:"POST",
 				data:form1,
 				success:function(data)
 				{	
+					
 					if (data === 'insert')
 					{
 						alert("Data inserted!");						
@@ -178,7 +169,6 @@
 
 				success:function(data)
 				{
-					
 					$('#id_rooms').val(id);
 					$('#created_date').val(data.created_date);
 					$('#description').val(data.description);

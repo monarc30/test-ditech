@@ -162,11 +162,30 @@ class DataBase {
 		
 	}
 
-	public function deleteVendorSales( Rooms $Rooms ):array{
+	public function deleteRooms( Rooms $Rooms ):array{
 		
 		$con = $this->getConn();	
 		
-		$query = "delete from vendors_sales where id=".$Rooms->getid()."";
+		$query = "delete from rooms where id=".$Rooms->getid()."";
+
+		if (mysqli_query($con,$query)) {
+			$data[] = array(
+				'success' => '1'
+			);
+		}
+		else {
+			$data[] = array(
+				'success' => '0'
+			);
+		}
+		return $data;
+	}
+
+	public function deleteUser( Users $Users ):array{
+		
+		$con = $this->getConn();			
+
+		$query = "delete from users where id=".$Users->getid();		
 
 		if (mysqli_query($con,$query)) {
 			$data[] = array(
@@ -182,7 +201,7 @@ class DataBase {
 	}
 	
 	
-	public function deleteUser( Users $Users, RentedRooms $RentedRooms ):array{
+	public function deleteRentedRooms( Users $Users, RentedRooms $RentedRooms ):array{
 		
 		$con = $this->getConn();			
 
@@ -217,10 +236,26 @@ class DataBase {
 		
 		while($row=mysqli_fetch_assoc($res)) 
 		{
-			$Vendors[] = $row;
+			$Users[] = $row;
 		}		
 		
-		return $Vendors;		
+		return $Users;		
+	}
+
+	public function getRooms():array{
+		
+		$con = $this->getConn();	
+		
+		$Rooms = array();		
+		$query = "select * from rooms";
+		$res = mysqli_query($con,$query);		
+		
+		while($row=mysqli_fetch_assoc($res)) 
+		{
+			$Rooms[] = $row;
+		}		
+		
+		return $Rooms;		
 	}
 
 	public function getRentedRooms(string $date = ""):array{
@@ -249,7 +284,7 @@ class DataBase {
 		return $Users;		
 	}
 
-	public function user_one_users( Rooms $Rooms ):array {
+	public function user_one_rooms( Rooms $Rooms ):array {
 		
 		$con = $this->getConn();	
 		

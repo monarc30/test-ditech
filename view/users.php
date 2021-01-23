@@ -199,7 +199,6 @@
 					data:{id:id,action:action},
 					success:function(data)
 					{
-						console.log(data);
 						Reset();
 						getData('users', '?action=get_all');
 						

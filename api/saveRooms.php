@@ -1,8 +1,8 @@
 <?php
 
-//ini_set('display_errors',1);
-//ini_set('display_startup_erros',1);
-//error_reporting(E_ALL);
+ini_set('display_errors',1);
+ini_set('display_startup_erros',1);
+error_reporting(E_ALL);
 
 require_once ( "../env.php" );
 
@@ -38,7 +38,8 @@ if (isset($_POST["action"]))
 	if ($_POST["action"] === 'update') 
 	{
 		$form_data = array(
-			'description' => $_POST['description'],			
+			'description' => $_POST['description'],	
+			'id' => $_POST['id_rooms'],		
 		);
 
 		$param = "?action=update_rooms";				

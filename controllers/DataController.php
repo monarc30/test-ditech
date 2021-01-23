@@ -34,10 +34,7 @@ class DataController {
                     
                     $output .= '
                     <tr style="text-align:center">
-                        <td>'.$row['name'].'</td>                        
-                        <td>'.$row['value'].'</td>
-                        <td>'.$row['commission'].'</td>
-                        <td>'.$row['date'].'</td>
+                        <td>'.$row['description'].'</td>
                         <td><button name="edit" class="btn btn-primary edit" type=button id="'.$row['id'].'">Edit</button></td>
                         <td><button name="delete" class="btn btn-danger delete" type=button id="'.$row['id'].'">Delete</button></td>  
                     </tr>

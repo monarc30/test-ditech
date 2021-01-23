@@ -45,7 +45,7 @@ class saveController {
 		
 	}
 	
-	public static function update( array $form_data, string $param, string $url_api ):string {		
+	public static function update( array $form_data, string $param, string $url_api ):string {				
 
 		$url = $url_api.$param;
 
@@ -57,8 +57,8 @@ class saveController {
 
 		curl_close($client);
 
-		$result = json_decode($response, true);
-		
+		$result = json_decode($response, true);		
+
 		foreach($result as $keys => $values){
 			
 			if($result[$keys]['success'] === '1')
