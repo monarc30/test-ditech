@@ -49,29 +49,22 @@ class DataBase {
 
 	public function insertRooms( Rooms $Rooms ):array{
 		
-		$con = $this->getConn();
+		$con = $this->getConn();		
 		
-		if(isset($_POST["id_vendor"]))
-		{				
-			$query = "insert into rooms (description) values (
-				
-				'".$Rooms->getDescription()."')";
+		$query = "insert into rooms (description) values (
 			
-			if (mysqli_query($con,$query)) {
-				$data[] = array(
-					'success' => '1'
-				);
-			}
-			else {
-				$data[] = array(
-					'success' => '0'
-				);
-			}			
-		}else{
-			$data[] = array(	
-				'success' => '0'
-			);				
+			'".$Rooms->getDescription()."')";
+		
+		if (mysqli_query($con,$query)) {
+			$data[] = array(
+				'success' => '1'
+			);
 		}
+		else {
+			$data[] = array(
+				'success' => '0'
+			);		}			
+		
 		
 		return $data;
 	}

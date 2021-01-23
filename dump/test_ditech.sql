@@ -18,7 +18,7 @@ CREATE TABLE `users` (
 CREATE TABLE `rooms` ( 
   
   `id` int(11) NOT NULL AUTO_INCREMENT,  
-  `description` float,
+  `description` varchar(100),
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),  
   `updated_date` DATETIME,
   

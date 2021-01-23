@@ -65,7 +65,7 @@
 		</select>					
 		------->
 		
-		<input type="hidden" name="id_vendor_sales" id="id_rooms">
+		<input type="hidden" name="id_rooms" id="id_rooms">
 		<input type="hidden" name="action" id="action" value="insert">
 		<hr>
 		<input id="save" class="btn btn-primary" type="submit" value="Insert New"></input>	
@@ -144,15 +144,13 @@
 				data:form1,
 				success:function(data)
 				{	
-					console.log(data);
-					
 					if (data === 'insert')
 					{
-						//alert("Data inserted!");						
+						alert("Data inserted!");						
 					}
 					else if (data === 'update') 
 					{
-						//alert("Data updated!");											
+						alert("Data updated!");											
 					}
 					Reset();
 					getData('rooms', '?action=get_all_rooms');
@@ -210,7 +208,7 @@
 					success:function(data)
 					{
 						Reset();
-						getData('rooms','?action=get_all_sales');
+						getData('rooms','?action=get_all_rooms');
 						
 						//alert("Data deleted!");
 					}

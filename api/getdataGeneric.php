@@ -4,7 +4,6 @@ ini_set('display_errors',1);
 ini_set('display_startup_erros',1);
 error_reporting(E_ALL);
 
-
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 
@@ -38,12 +37,8 @@ if ($_GET['action'] === "insert") {
 
 if ($_GET['action'] === "insert_rooms") {	
 
-	$commission = $VendorsSales->setcommission($_POST['commission']);
-	$value = $VendorsSales->setValue($_POST['value']);
-	$date = $VendorsSales->setData($_POST['date']);
-	$id_vendor = $VendorsSales->setIdvendor($_POST['id_vendor']);	
-	
-	$res = $data->insertVendorSales( $VendorsSales );
+	$description = $Rooms->setdescription($_POST['description']);
+	$res = $data->insertRooms( $Rooms );
 }
 
 if ($_GET['action'] === "user_one") {	

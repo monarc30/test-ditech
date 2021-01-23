@@ -24,21 +24,10 @@ class Rooms {
 	public function setDescription($description):void {
 		$this->description = $description;		
 	}
-	
-	public function setCreateddate($created_date):void {
-		$this->created_date = $created_date;
+
+	public function getDescription():string {
+		return $this->description;		
 	}
 	
-	public function getCreateddate():DateTimeInterface {
-		return $this->created_date;		
-	}
-	
-	public function setUpdateddate($updated_date):void {
-		$this->updated_date = $updated_date;
-	}
-	
-	public function getUpdateddate():DateTimeInterface {
-		return $this->updated_date;		
-    }    	
 	
 }

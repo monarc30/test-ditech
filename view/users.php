@@ -131,9 +131,9 @@
 				{
 					if (data === 'insert')
 					{
-						//alert("Data inserted!");
+						alert("Data inserted!");
 						Reset();
-						getData('Users', '?action=get_all');
+						getData('users', '?action=get_all');
 					}
 					else if (data === 'error2')
 					{
@@ -141,7 +141,7 @@
 					}						
 					else if (data === 'update') 
 					{
-						//alert("Data updated!");
+						alert("Data updated!");
 						Reset();
 						getData('users', '?action=get_all');
 					
@@ -174,7 +174,7 @@
 					$('#name').val(data.name);
 					$('#email').val(data.email);
 					$('#login').val(data.login);
-					$('#password').val(data.password);					
+					$('#password').val(data.password);										
 				},
 				error: function(result) {
                     console.log(result);					
