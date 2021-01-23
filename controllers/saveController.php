@@ -4,8 +4,7 @@ class saveController {
 
 	public static function add( array $form_data, string $param, string $url_api ):string {		
 
-		$url = $url_api.$param;	
-
+		$url = $url_api.$param;			
 		$client = curl_init($url);
 		curl_setopt($client, CURLOPT_POST, true);		
 		curl_setopt($client, CURLOPT_POSTFIELDS, $form_data);		

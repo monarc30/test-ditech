@@ -106,20 +106,44 @@ class DataBase {
 		
 		$con = $this->getConn();			
 
-		$query = "insert into rented_rooms (id_user,id_room,start_reserved,end_reserved) values (
-			'".$RentedRooms->getidUser()."',
-			'".$RentedRooms->getidRoom()."',
-			'".$RentedRooms->getstartReserved()."',
-			'".$RentedRooms->getendReserved()."')";
+		$id_user = $RentedRooms->getidUser();
+		$id_room = $RentedRooms->getidRoom();
+		$start = $RentedRooms->getstartReserved();
+		$end = $RentedRooms->getendReserved();
 
-		if (mysqli_query($con,$query)) {
+		$start_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($start)));
+
+		$end_date = date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($start)));		
+
+		$query_condition1 = "select id_user,start_reserved from rented_rooms where id_user = $id_user and start_reserved between '$start_date' and '$end_date'";
+		$res_condition1 = mysqli_query($con,$query_condition1);
+		$rows1 = mysqli_num_rows($res_condition1);
+
+		$query_condition2 = "select id_room,start_reserved from rented_rooms where id_room = $id_room and start_reserved between '$start_date' and '$end_date'";
+		$res_condition2 = mysqli_query($con,$query_condition2);
+		$rows2 = mysqli_num_rows($res_condition2);
+
+		if ($rows1 == 0 and $rows2 == 0) {
+
+			$query = "insert into rented_rooms (id_user,id_room,start_reserved,end_reserved) values (
+				'".$id_user."',
+				'".$id_room."',
+				'".$start."',
+				'".$end."')";
+
+			if (mysqli_query($con,$query)) {
+				$data[] = array(
+					'success' => '1'
+				);
+			}
+			else {
+				$data[] = array(
+					'success' => '0'
+				);
+			}
+		}else{
 			$data[] = array(
-				'success' => '1'
-			);
-		}
-		else {
-			$data[] = array(
-				'success' => '0'
+				'success' => '2'
 			);
 		}
 		
@@ -284,12 +308,6 @@ class DataBase {
 		
 		$Rooms = array();	
 
-		#$date = date("Y-m-d H:i:s");
-
-		#$last_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($date)));
-
-		//$query = "select id,description from rooms where id not in (select id_room from rented_rooms where end_reserved <= '$date')";
-
 		$query = "select id,description from rooms";
 
 		$res = mysqli_query($con,$query);		
@@ -318,10 +336,6 @@ class DataBase {
 
 		$date = date("Y-m-d H:i:s");
 		
-		//$start_date = date('Y-m-d H:i:s',strtotime('-1 hour',strtotime($date)));
-
-		//$end_date = date('Y-m-d H:i:s',strtotime('+1 hour',strtotime($date)));
-
 		$and_date  = " and end_reserved >= '$date' ";			
 
 		$query = "select id, id_user, id_room, start_reserved, end_reserved from rented_rooms where 1=1 $and_date $and_user ";

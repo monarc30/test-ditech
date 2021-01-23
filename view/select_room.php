@@ -115,8 +115,11 @@
 					{
 						alert("Room selected!");	
 
-                        getData('rented_rooms_user', '?action=get_user_by_date');
+                        getData('rented_rooms_user', '?action=get_user_by_date&id=1');
 					}															
+                    else if (data === 'error2') {
+                        alert("Unavailable Room!");	
+                    }
 				}
 			});				
 			
@@ -141,7 +144,7 @@
 					{
 						alert("Reservation Canceled!");
 
-                        getData('rented_rooms_user', '?action=get_user_by_date');
+                        getData('rented_rooms_user', '?action=get_user_by_date&id=1');
 					}
 				});
 				
