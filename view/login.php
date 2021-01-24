@@ -2,9 +2,6 @@
 
 session_start();
 
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 require_once ( "../models/Users.php" );
