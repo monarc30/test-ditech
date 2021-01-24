@@ -10,8 +10,8 @@ class DataController {
         curl_setopt($client, CURLOPT_RETURNTRANSFER, true);	
         $response = curl_exec($client);        
         $result = json_decode($response, true);                       
-        $output = "";                
-        
+        $output = "";     
+
         if (count($result) > 0)
         {
             foreach($result as $row)
@@ -50,8 +50,8 @@ class DataController {
                 elseif ( $type === 'rented_rooms' ) {
                     $output .= '
                     <tr style="text-align:center">                    
-                        <td>'.$row['id_user'].'</td>
-                        <td>'.$row['id_room'].'</td>
+                        <td>'.$row['name'].'</td>
+                        <td>'.$row['description'].'</td>
                         <td>'.$row['start_reserved'].'</td>
                         <td>'.$row['end_reserved'].'</td>                        
                     </tr>';                

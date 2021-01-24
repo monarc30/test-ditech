@@ -330,7 +330,7 @@ class DataBase {
 
 		$user = $Users->getid();
 
-		if ($user != null) {
+		if ($user != 0) {
 			$and_user = " and id_user = '$user' ";
 		}
 

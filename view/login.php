@@ -2,6 +2,9 @@
 
 session_start();
 
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 require_once ( "../env.php" );
 require_once ( "../dao/DataBase.php" ) ;
 require_once ( "../models/Users.php" );
@@ -14,7 +17,7 @@ if ($_POST) {
 
 	if ($_POST['login']=="admin" and $_POST['password']=="123456") {
 		
-		header('Location: ../index.php');
+		header('Location: ../start.php');
 		exit;
 	}
 	

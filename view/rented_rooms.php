@@ -20,7 +20,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item active">
-					<a class="nav-link" href="..\index.php">Home</a>
+					<a class="nav-link" href="..\index.php">Login</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="users.php">Users</a>
@@ -67,13 +67,14 @@
             data: { type: type, param: param },
             success: function(data)
             {					
-                $('#result').html(data);
+                
+				$('#result').html(data);
             }
         })
     }	
         
 	$(document).ready(function(){		
-		getData('rented_rooms', '?action=get_user_by_date');					
+		getData('rented_rooms', '?action=get_user_by_date&id=0');					
 	});
 </script>
 </body>
